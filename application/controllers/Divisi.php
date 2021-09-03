@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class User extends CI_Controller {
+class Divisi extends CI_Controller {
     public $data = array();
 
 	public function __construct()
@@ -20,7 +20,7 @@ class User extends CI_Controller {
             'https://cdn.jsdelivr.net/npm/jquery-easy-loading@1.3.0/dist/jquery.loading.min.js'
         ];
 
-        $this->data['controller'] = "User";
+        $this->data['controller'] = "Divisi";
     }
 
 	public function index()
@@ -37,19 +37,21 @@ class User extends CI_Controller {
 
     public function list()
     {
-        $this->load->model('User_model');
-        $raw_result = $this->User_model->get_data();
+        $this->load->model('Divisi_model');
+
+        $cabang = $this->input->post('cabang');
+
+        $raw_result = $this->Divisi_model->get_divisi($cabang);
         $return_result = array();
 
         foreach($raw_result as $rr){
             $return = array(
-                'nama_lengkap' => $rr['nama_lengkap'],
+                'nama' => $rr['nama'],
+                'jumlah_pegawai' => $rr['jumlah_pegawai'],
                 'nama_cabang' => $rr['nama_cabang'],
-                'nama_divisi' => $rr['nama_divisi'],
-                'status' => $rr['status'],
                 'action' => [
-                    'id' => $rr['id'],
-                    'username' => $rr['username']
+                    'id_ai_divisi' => $rr['id_ai_divisi'],
+                    'id_divisi' => $rr['id_divisi']
                 ]
             );
 
@@ -63,15 +65,14 @@ class User extends CI_Controller {
         }
     }
 
-    public function add_user_form()
+    public function add_divisi_form()
     {
-        $this->load->model('Config_model');
         $data = array(
-            'cabang' => $this->Config_model->get_cabang(),
-            'divisi' => $this->Config_model->get_divisi()
+            'value' => $this->input->post('value'),
+            'label' => $this->input->post('label'),
         );
 
-        $pages = $this->load->view('dashboard/user/add', $data, true);
+        $pages = $this->load->view('dashboard/divisi/add', $data, true);
 
         echo json_encode(['body' => $pages]);
     }

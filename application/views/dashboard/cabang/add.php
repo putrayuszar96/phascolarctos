@@ -13,12 +13,12 @@
                   <div class="alert alert-warning d-none" id="form-loading">Menambahkan...</div>
                 </div>
                 <div class="form-group col-12">
-                    <label for="email">Nama <small class="text-danger">(required)</small></label>
-                    <input type="email" class="form-control" id="email" placeholder="Masukkan nama cabang...">
+                    <label for="nama">Nama <small class="text-danger">(required)</small></label>
+                    <input type="text" class="form-control" id="nama" placeholder="Masukkan nama cabang...">
                 </div>
                 <div class="form-group col-12">
-                    <label for="username">Alamat <small class="text-danger">(required)</small></label>
-                    <input type="text" class="form-control" id="username" placeholder="Masukkan nama pegawai...">
+                    <label for="alamat">Alamat <small class="text-danger">(required)</small></label>
+                    <input type="text" class="form-control" id="alamat" placeholder="Masukkan alamat cabang...">
                 </div>
             </div>
         </form>

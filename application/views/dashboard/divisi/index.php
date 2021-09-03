@@ -4,17 +4,18 @@
             <li class="breadcrumb-item"><?= $controller; ?></li>
             <li class="breadcrumb-item active"><?= $meta['name'] ;?></li>
         </ol>
+
         <div class="row">
             <div class="col-xl-12">
                 <div class="card mb-4">
                     <div class="card-header">
-                        Tampilkan Cabang
+                        Cabang
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12">
                                 <label for="kantor-cabang">Pilih Kantor Cabang:</label>
-                                <select class="form-control" id="kantor-cabang">
+                                <select class="form-control" id="show-kantor-cabang">
                                     <option value="">--- Pilih kantor cabang yang ingin ditampilkan ---</option>
                                 </select>
                             </div>
@@ -23,6 +24,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row d-none" id="tampilan-divisi">
             <div class="col-xl-12">
                 <div class="card mb-4">
@@ -44,15 +46,19 @@
                                         <thead>
                                             <tr>
                                                 <th>Nama Divisi</th>
-                                                <th>Pegawai</th>
+                                                <th>Kantor Cabang</th>
+                                                <th>Jumlah Pegawai</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         
                                         <tfoot>
-                                            <th>Nama Divisi</th>
-                                            <th>Pegawai</th>
-                                            <th>Action</th>
+                                            <tr>
+                                                <th>Nama Divisi</th>
+                                                <th>Kantor Cabang</th>
+                                                <th>Jumlah Pegawai</th>
+                                                <th>Action</th>
+                                            </tr>
                                         </tfoot>
                                     </table>
                                 </div>
