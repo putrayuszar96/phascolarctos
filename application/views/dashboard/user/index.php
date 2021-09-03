@@ -13,7 +13,7 @@
                                 Daftar Pegawai Cabang
                             </div>
                             <div class="col-6">
-                                <button id="tambah-cabang" class="btn btn-sm btn-primary float-right">Tambah Pegawai</button>
+                                <button id="btn-tambah-pegawai" class="btn btn-sm btn-primary float-right">Tambah Pegawai</button>
                             </div>
                         </div>
                     </div>
@@ -31,11 +31,13 @@
                                 </thead>
                                 <tbody id="data-table-body"></tbody>
                                 <tfoot>
-                                    <th>Nama Lengkap</th>
-                                    <th>Cabang</th>
-                                    <th>Divisi</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
+                                    <tr>
+                                        <th>Nama Lengkap</th>
+                                        <th>Cabang</th>
+                                        <th>Divisi</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
                                 </tfoot>
                             </table>
                         </div>

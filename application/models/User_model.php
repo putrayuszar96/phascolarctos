@@ -28,4 +28,14 @@ class User_model extends CI_Model
             return ['status' => 'error', 'data' => null];
         }
     }
+
+    public function get_data()
+    {
+        $this->db->select('users.id, users.username, users.nama_lengkap, kantor_cabang.nama AS nama_cabang, divisi.nama AS nama_divisi, users.status');
+        $this->db->from('users');
+        $this->db->join('kantor_cabang', 'users.cabang = kantor_cabang.id_cabang');
+        $this->db->join('divisi', 'users.divisi = divisi.id_divisi');
+
+        return $this->db->get()->result_array();
+    }
 }
