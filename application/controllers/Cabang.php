@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class User extends CI_Controller {
+class Cabang extends CI_Controller {
     public $data = array();
 
 	public function __construct()
@@ -20,7 +20,7 @@ class User extends CI_Controller {
             'https://cdn.jsdelivr.net/npm/jquery-easy-loading@1.3.0/dist/jquery.loading.min.js'
         ];
 
-        $this->data['controller'] = "User";
+        $this->data['controller'] = "Kantor Cabang";
     }
 
 	public function index()
@@ -28,7 +28,7 @@ class User extends CI_Controller {
         $this->data['meta'] = [
             'title' => 'Cabang - ARIP System',
             'id_page' => 'cabang_index',
-            'name' => 'Kantor Cabang'
+            'name' => 'Daftar Kantor Cabang'
         ];
         $this->data['sidebar'] = $this->load->view('components/sidebar', array('active' => 'cabang'), true);
         $this->data['body'] = $this->load->view('dashboard/cabang/index', $this->data, true);
@@ -37,19 +37,19 @@ class User extends CI_Controller {
 
     public function list()
     {
-        $this->load->model('User_model');
-        $raw_result = $this->User_model->get_data();
+        $this->load->model('Cabang_model');
+        $raw_result = $this->Cabang_model->get_list();
         $return_result = array();
 
         foreach($raw_result as $rr){
             $return = array(
-                'nama_lengkap' => $rr['nama_lengkap'],
-                'nama_cabang' => $rr['nama_cabang'],
-                'nama_divisi' => $rr['nama_divisi'],
-                'status' => $rr['status'],
+                'nama' => $rr['nama'],
+                'alamat' => $rr['alamat'],
+                'jumlah_divisi' => $rr['jumlah_divisi'],
+                'jumlah_pegawai' => $rr['jumlah_pegawai'],
                 'action' => [
-                    'id' => $rr['id'],
-                    'username' => $rr['username']
+                    'id_ai_cabang' => $rr['id_ai_cabang'],
+                    'id_Cabang' => $rr['id_cabang']
                 ]
             );
 
@@ -63,15 +63,9 @@ class User extends CI_Controller {
         }
     }
 
-    public function add_user_form()
+    public function add_cabang_form()
     {
-        $this->load->model('Config_model');
-        $data = array(
-            'cabang' => $this->Config_model->get_cabang(),
-            'divisi' => $this->Config_model->get_divisi()
-        );
-
-        $pages = $this->load->view('dashboard/user/add', $data, true);
+        $pages = $this->load->view('dashboard/cabang/add', array(), true);
 
         echo json_encode(['body' => $pages]);
     }
