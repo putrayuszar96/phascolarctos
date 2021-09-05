@@ -11,9 +11,9 @@
                 </a>
                 <div class="collapse" id="menu-kantor" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="#">Cabang</a>
-                        <a class="nav-link" href="#">Divisi</a>
-                        <a class="nav-link" href="#">Pegawai</a>
+                        <a class="nav-link" href="cabang">Cabang</a>
+                        <a class="nav-link" href="divisi">Divisi</a>
+                        <a class="nav-link" href="user">Pegawai</a>
                     </nav>
                 </div>
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#menu-gudang" aria-expanded="false" aria-controls="collapseLayouts">
@@ -21,9 +21,9 @@
                 </a>
                 <div class="collapse" id="menu-gudang" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="#">Gudang</a>
-                        <a class="nav-link" href="#">Rak Milik</a>
-                        <a class="nav-link" href="#">Barang</a>
+                        <a class="nav-link" href="gudang">Gudang</a>
+                        <a class="nav-link" href="rak">Rak Milik</a>
+                        <a class="nav-link" href="barang">Barang</a>
                     </nav>
                 </div>
             </div>
