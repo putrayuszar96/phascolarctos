@@ -13,4 +13,20 @@ class Divisi_model extends CI_Model
 
         return $this->db->get()->result_array();
     }
+
+    public function ambil_id_terakhir($cabang)
+    {
+        return $this->db->order_by('id_ai_divisi', 'DESC')->get_where('divisi', array('id_cabang' => $cabang), 1)->row_array();
+    }
+
+    public function do_add($data_post)
+    {
+        $query = $this->db->insert('divisi', $data_post);
+
+        if($this->db->affected_rows() > 0){
+            return ['status' => 'ok', 'data' => $data_post];
+        }else{
+            return ['status' => 'error', 'data' => null];
+        }
+    }
 }

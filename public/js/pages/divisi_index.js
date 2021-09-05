@@ -43,23 +43,31 @@ $(document).on('click', '#submit-form-divisi', function () {
     $('#tambah-divisi').loading();
 
     let nama = $('#nama').val()
-    let alamat = $('#alamat').val()
+    let id_terakhir = $('#form-id-divisi-terakhir').val()
+    let id_cabang = $('#form-kantor-cabang-hidden').val()
 
     $.ajax({
         type: 'POST',
-        url: 'user/add_divisi_process',
+        url: 'divisi/add_divisi_process',
         dataType: 'json',
         data: {
             nama: nama,
-            alamat: alamat
+            id_terakhir: id_terakhir,
+            id_cabang: id_cabang
         },
         success: function (response) {
             if(response.status == 'ok'){
                 $('#form-loading').addClass('d-none');
                 $('#form-success').removeClass('d-none');
+                $('#tambah-divisi').loading('stop');
 
                 setTimeout(function () {
-                    location.reload()
+                    $('#tambah-divisi').modal('hide');
+                    $('#tambah-divisi, .modal-backdrop').remove();
+                    
+                    $('#dataTable').DataTable().clear();
+                    $('#dataTable').DataTable().destroy();
+                    getDivisi(id_cabang)
                 }, 1000)
             }else{
                 $('#form-loading').addClass('d-none');

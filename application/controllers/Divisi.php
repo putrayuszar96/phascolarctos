@@ -67,39 +67,46 @@ class Divisi extends CI_Controller {
 
     public function add_divisi_form()
     {
+        $this->load->model('Divisi_model');
+
         $data = array(
             'value' => $this->input->post('value'),
             'label' => $this->input->post('label'),
         );
+
+        $get_id = $this->Divisi_model->ambil_id_terakhir($this->input->post('value'));
+
+        if($get_id != null){
+            $id_terakhir = $get_id['id_divisi'];
+            $id_terakhir = substr($id_terakhir, -1);
+        }else{
+            $id_terakhir = 0;
+        }
+        
+        $data['id_terakhir'] = $id_terakhir;
 
         $pages = $this->load->view('dashboard/divisi/add', $data, true);
 
         echo json_encode(['body' => $pages]);
     }
 
-    public function add_user_process()
+    public function add_divisi_process()
     {
-        $email = $this->input->post('email');
-        $username = $this->input->post('username');
-        $nama_lengkap = $this->input->post('nama_lengkap');
-        $cabang = $this->input->post('cabang');
-        $divisi = $this->input->post('divisi');
-        $status = 1;
-        $password = 'kcplangsa123';
+        $id_cabang = $this->input->post('id_cabang');
+        $nama_divisi = $this->input->Post('nama');
+
+        $id_divisi = sprintf("%03d", ($this->input->post('id_terakhir')+1));
+        $id_divisi = $id_cabang . "DIV" . $id_divisi;
 
         $data_post = array(
-            'email' => $email,
-            'username' => $username,
-            'nama_lengkap' => $nama_lengkap,
-            'cabang' => $cabang,
-            'divisi' => $divisi,
-            'status' => $status,
-            'password' => password_hash($password, PASSWORD_BCRYPT)
+            'id_cabang' => $id_cabang,
+            'id_divisi' => $id_divisi,
+            'nama' => $nama_divisi
         );
 
-        $this->load->model('User_model');
+        $this->load->model('Divisi_model');
         
-        $do_register = $this->User_model->do_register($data_post);
+        $do_register = $this->Divisi_model->do_add($data_post);
 
         if($do_register){
             echo json_encode(['status' => 'ok']);

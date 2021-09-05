@@ -15,6 +15,7 @@
                 <div class="form-group col-12">
                     <label for="cabang">Kantor Cabang <small class="text-danger">(required)</small></label>
                     <input type="hidden" class="form-control d-none" id="form-kantor-cabang-hidden" value="<?=$value?>">
+                    <input type="hidden" class="form-control d-none" id="form-id-divisi-terakhir" value="<?=$id_terakhir?>">
                     <input type="text" class="form-control" id="form-kantor-cabang" value="<?=$label;?>" disabled>
                 </div>
                 <div class="form-group col-12">
