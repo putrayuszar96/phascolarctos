@@ -76,7 +76,7 @@ class Rak extends CI_Controller {
             'label' => $this->input->post('label'),
         );
 
-        $data['divisi'] = $this->Divisi_model->get_divisi($this->input->post('value'));
+        $data['divisi'] = $this->Divisi_model->get_divisi_no_rak($this->input->post('value'));
         $data['gudang'] = $this->Rak_model->get_rak($this->input->post('value'));
 
         $pages = $this->load->view('dashboard/rak/add', $data, true);
@@ -97,6 +97,45 @@ class Rak extends CI_Controller {
             echo json_encode(['status' => 'ok','list' => $list]);
         }else{
             echo json_encode(['status' => 'null','list' => null]);
+        }
+    }
+
+    public function add_rak_milik_process()
+    {
+        // die(var_dump($this->input->post()));
+
+        $id_divisi = $this->input->post('id_divisi');
+        $id_cabang = $this->input->post('id_cabang');
+        $jumlah_rak = count($this->input->post('rak_milik'));
+        
+        $rak_milik = "";
+        $c = 1;
+
+        foreach($this->input->post('rak_milik') as $rak){
+            $rak_milik .= $rak;
+            
+            if($c != $jumlah_rak){
+                $rak_milik .= "##";
+            }
+
+            $c++;
+        }
+
+        $data_post = array(
+            'id_divisi' => $id_divisi,
+            'id_cabang' => $id_cabang,
+            'jumlah_rak' => $jumlah_rak,
+            'rak_milik' => $rak_milik
+        );
+
+        $this->load->model('Rak_model');
+        
+        $do_add = $this->Rak_model->do_add_pemilik($data_post);
+
+        if($do_add){
+            echo json_encode(['status' => 'ok']);
+        }else{
+            echo json_encode(['status' => 'error']);
         }
     }
 

@@ -35,44 +35,55 @@ $(document).on('click', '#btn-tambah-rak', function () {
 })
 
 $(document).on('click', '#cancel-form-rak', function () {
-    $('#tambah-rak').modal('hide');
-    $('#tambah-rak, .modal-backdrop').remove();
+    $('#tambah-pemilik').modal('hide');
+    $('#tambah-pemilik, .modal-backdrop').remove();
+    $('#gudang').val('null').change();
+    $('#daftar-rak-container').empty();
 })
 
 $(document).on('click', '#submit-form-rak', function () {
-    $('#tambah-rak').loading();
+    $('#tambah-pemilik').loading();
 
-    let nama = $('#nama').val()
-    let alamat = $('#alamat').val()
+    let id_cabang = $('#form-kantor-cabang-hidden').val();
+    let id_divisi = $('#divisi').val()
+    let rak_milik = []
+    $('input[type=checkbox]:checked').each(function () {
+        rak_milik.push($(this).val());
+    })
 
     $.ajax({
         type: 'POST',
-        url: 'rak/add_rak_process',
+        url: 'rak/add_rak_milik_process',
         dataType: 'json',
         data: {
-            nama: nama,
-            alamat: alamat
+            id_cabang: id_cabang,
+            id_divisi: id_divisi,
+            rak_milik: rak_milik
         },
         success: function (response) {
             if(response.status == 'ok'){
-                $('#form-loading').addClass('d-none');
-                $('#form-success').removeClass('d-none');
-
                 setTimeout(function () {
-                    location.reload()
-                }, 1000)
+                $('#tambah-pemilik').modal('hide');
+                $('#tambah-pemilik, .modal-backdrop').remove();
+                $('#tambah-pemilik').loading('stop');
+                
+                $('#dataTable').DataTable().clear();
+                $('#dataTable').DataTable().destroy();
+
+                getRak(id_cabang)
+            }, 1000)
             }else{
                 $('#form-loading').addClass('d-none');
                 $('#form-failed').removeClass('d-none');
 
-                $('#tambah-rak').loading('stop');
+                $('#tambah-pemilik').loading('stop');
             }
         }
     })
 })
 
 $(document).on('change', '#gudang', function () {
-    $('#tambah-rak').loading();
+    $('#tambah-pemilik').loading();
 
     let id_rak = $(this).val();
 
@@ -101,7 +112,7 @@ $(document).on('change', '#gudang', function () {
                 console.log(response.status)
             }
 
-            $('#tambah-rak').loading('stop');
+            $('#tambah-pemilik').loading('stop');
         }
     })
 })
@@ -179,15 +190,22 @@ function getRak(cabang)
                 'data': 'jumlah_rak',
                 'title': 'Jumlah Rak',
                 'render': function(data, type, row, meta) {
-                    return (data != null && data != 'null' && data != '') ? data + " orang" : '-';
+                    return (data != null && data != 'null' && data != '') ? data + " rak" : '-';
                 }
             },
             {
                 'targets': 2,
-                'data': 'daftar_rak',
+                'data': 'rak',
                 'title': 'Daftar Rak',
                 'render': function(data, type, row, meta) {
-                    return (data != null && data != 'null' && data != '') ? data + " orang" : '-';
+                    let html = '';
+                    let list = data.split('##');
+
+                    list.forEach(element => {
+                        html += `<span class="badge badge-primary mx-2 my-1">${element}</span>`
+                    })
+
+                    return html
                 }
             },
             {

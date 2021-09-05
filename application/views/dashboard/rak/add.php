@@ -28,7 +28,7 @@
                     <strong class="d-block">Rak Milik</strong>
                     <label for="gudang">Pilih Gudang</label>
                     <select class="form-control" id="gudang">
-                      <option value="">--- Pilih gudang ---</option>
+                      <option value="null">--- Pilih gudang ---</option>
                       <?php foreach($gudang as $g):?>
                         <option value="<?=$g['id_rak'];?>"><?=$g['nama'];?></option>
                       <?php endforeach;?>
@@ -42,8 +42,8 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batalkan</button>
-        <button type="button" class="btn btn-primary">Tambah</button>
+        <button type="button" class="btn btn-secondary" id="cancel-form-rak" data-dismiss="modal">Batalkan</button>
+        <button type="button" class="btn btn-primary" id="submit-form-rak">Tambah</button>
       </div>
     </div>
   </div>

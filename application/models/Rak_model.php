@@ -33,6 +33,17 @@ class Rak_model extends CI_Model
         return $this->db->order_by('id_rak', 'DESC')->get_where('rak', array('id_cabang' => $cabang), 1)->row_array();
     }
 
+    public function do_add_pemilik($data_post)
+    {
+        $query = $this->db->insert('kepemilikan', $data_post);
+
+        if($this->db->affected_rows() > 0){
+            return ['status' => 'ok', 'data' => $data_post];
+        }else{
+            return ['status' => 'error', 'data' => null];
+        }
+    }
+
     public function do_add_rak($data_post)
     {
         $query = $this->db->insert('rak', $data_post);

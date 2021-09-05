@@ -29,4 +29,8 @@ class Divisi_model extends CI_Model
             return ['status' => 'error', 'data' => null];
         }
     }
+
+    public function get_divisi_no_rak($cabang){
+        return $this->db->query('SELECT divisi.* FROM divisi NATURAL LEFT JOIN kepemilikan WHERE kepemilikan.id_divisi IS NULL')->result_array();
+    }
 }
