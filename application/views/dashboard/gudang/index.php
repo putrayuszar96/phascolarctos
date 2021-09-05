@@ -25,7 +25,7 @@
             </div>
         </div>
 
-        <div class="row d-none" id="tampilan-divisi">
+        <div class="row d-none" id="tampilan-gudang">
             <div class="col-xl-12">
                 <div class="card mb-4">
                     <div class="card-header">
@@ -48,6 +48,7 @@
                                                 <th>Nama Gudang</th>
                                                 <th>Jumlah Rak</th>
                                                 <th>Daftar Rak</th>
+                                                <th>Jumlah</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -57,6 +58,7 @@
                                                 <th>Nama Gudang</th>
                                                 <th>Jumlah Rak</th>
                                                 <th>Daftar Rak</th>
+                                                <th>Jumlah</th>
                                                 <th>Action</th>
                                             </tr>
                                         </tfoot>

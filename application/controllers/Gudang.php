@@ -46,7 +46,7 @@ class Gudang extends CI_Controller {
 
         foreach($raw_result as $rr){
             $return = array(
-                'nama_gudang' => $rr['nama_gudang'],
+                'nama_gudang' => $rr['nama'],
                 'jumlah' => [
                     'level' => $rr['jumlah_level'],
                     'sublevel' => $rr['jumlah_sublevel']
