@@ -17,7 +17,8 @@ class Rak extends CI_Controller {
             'https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js',
             'https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js',
             'https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js',
-            'https://cdn.jsdelivr.net/npm/jquery-easy-loading@1.3.0/dist/jquery.loading.min.js'
+            'https://cdn.jsdelivr.net/npm/jquery-easy-loading@1.3.0/dist/jquery.loading.min.js',
+            'https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js'
         ];
 
         $this->data['controller'] = "Rak";
@@ -66,11 +67,37 @@ class Rak extends CI_Controller {
 
     public function add_rak_form()
     {
+        $this->load->model('Divisi_model');
+        $this->load->model('Rak_model');
         $data = array();
+
+        $data = array(
+            'value' => $this->input->post('value'),
+            'label' => $this->input->post('label'),
+        );
+
+        $data['divisi'] = $this->Divisi_model->get_divisi($this->input->post('value'));
+        $data['gudang'] = $this->Rak_model->get_rak($this->input->post('value'));
 
         $pages = $this->load->view('dashboard/rak/add', $data, true);
 
         echo json_encode(['body' => $pages]);
+    }
+
+    public function add_rak_form_get_list()
+    {
+        $this->load->model('Rak_model');
+
+        $id_rak = $this->input->post('id_rak');
+
+        $list = $this->Rak_model->get_rak_id($id_rak);
+        $list = explode('##', $list['list']);
+
+        if(count($list) > 0){
+            echo json_encode(['status' => 'ok','list' => $list]);
+        }else{
+            echo json_encode(['status' => 'null','list' => null]);
+        }
     }
 
     public function add_user_process()

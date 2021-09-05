@@ -25,7 +25,7 @@
             </div>
         </div>
 
-        <div class="row d-none" id="tampilan-divisi">
+        <div class="row d-none" id="tampilan-rak">
             <div class="col-xl-12">
                 <div class="card mb-4">
                     <div class="card-header">
@@ -34,7 +34,7 @@
                                 Data Rak
                             </div>
                             <div class="col-6">
-                                <button id="btn-tambah-divisi" class="btn btn-primary btn-sm float-right">Tambah Rak</button>
+                                <button id="btn-tambah-rak" class="btn btn-primary btn-sm float-right">Tambah Rak</button>
                             </div>
                         </div>
                     </div>

@@ -12,7 +12,7 @@ $('#show-kantor-cabang').on('change', function() {
     getRak(cabang_terpilih);
 })
 
-$(document).on('click', '#btn-tambah-divisi', function () {
+$(document).on('click', '#btn-tambah-rak', function () {
     $('main').loading();
     $.ajax({
         type: 'POST',
@@ -34,20 +34,20 @@ $(document).on('click', '#btn-tambah-divisi', function () {
     })
 })
 
-$(document).on('click', '#cancel-form-divisi', function () {
-    $('#tambah-divisi').modal('hide');
-    $('#tambah-divisi, .modal-backdrop').remove();
+$(document).on('click', '#cancel-form-rak', function () {
+    $('#tambah-rak').modal('hide');
+    $('#tambah-rak, .modal-backdrop').remove();
 })
 
-$(document).on('click', '#submit-form-divisi', function () {
-    $('#tambah-divisi').loading();
+$(document).on('click', '#submit-form-rak', function () {
+    $('#tambah-rak').loading();
 
     let nama = $('#nama').val()
     let alamat = $('#alamat').val()
 
     $.ajax({
         type: 'POST',
-        url: 'user/add_divisi_process',
+        url: 'rak/add_rak_process',
         dataType: 'json',
         data: {
             nama: nama,
@@ -65,8 +65,43 @@ $(document).on('click', '#submit-form-divisi', function () {
                 $('#form-loading').addClass('d-none');
                 $('#form-failed').removeClass('d-none');
 
-                $('#tambah-divisi').loading('stop');
+                $('#tambah-rak').loading('stop');
             }
+        }
+    })
+})
+
+$(document).on('change', '#gudang', function () {
+    $('#tambah-rak').loading();
+
+    let id_rak = $(this).val();
+
+    $.ajax({
+        type: 'POST',
+        url: 'rak/add_rak_form_get_list',
+        dataType: 'json',
+        data: {
+            id_rak: id_rak,
+        },
+        success: function (response) {
+            if(response.status == 'ok'){
+                $('#daftar-rak-container').empty()
+                response.list.forEach(element => {
+                    let html = ''
+                    let value = element.split(".")
+
+                    html += `
+                        <input type="checkbox" id="list-${value[0]}-${value[1]}" name="list[]" value="${element}" />
+                        <label for="list-${value[0]}-${value[1]}">${element}</label>
+                    `
+
+                    $('#daftar-rak-container').append(html)
+                });
+            }else{
+                console.log(response.status)
+            }
+
+            $('#tambah-rak').loading('stop');
         }
     })
 })
@@ -169,8 +204,8 @@ function getRak(cabang)
         ]
     });
 
-    var tampil_divisi = $('#tampilan-divisi').hasClass('d-none');
-    if(tampil_divisi == true){
-        $('#tampilan-divisi').removeClass('d-none');
+    var tampil_rak = $('#tampilan-rak').hasClass('d-none');
+    if(tampil_rak == true){
+        $('#tampilan-rak').removeClass('d-none');
     }
 }
