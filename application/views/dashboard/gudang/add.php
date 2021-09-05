@@ -12,26 +12,28 @@
             <div class="row">
                 <div class="form-group col-12">
                     <label for="form-kantor-cabang">Kantor Cabang</label>
-                    <input type="text" class="form-control d-none" id="form-kantor-cabang-hidden">
-                    <input type="text" class="form-control" id="form-kantor-cabang" placeholder="" value="" disabled>
+                    <input type="hidden" class="form-control d-none" id="form-kantor-cabang-hidden" value="<?=$value?>">
+                    <input type="hidden" class="form-control d-none" id="form-id-gudang-terakhir" value="<?=$id_terakhir?>">
+                    <input type="text" class="form-control" id="form-kantor-cabang" value="<?=$label;?>" disabled>
                 </div>
                 <div class="form-group col-12">
-                    <label for="jumlah-rak">Rak</label>
+                    <label for="nama-gudang">Nama Gudang</label>
+                    <input type="text" class="form-control" id="nama-gudang"/>
                 </div>
                 <div class="form-group col-6">
                     <label for="jumlah-rak">Jumlah Rak</label>
-                    <select class="form-control" id="jumlah-rak"></select>
+                    <input type="number" class="form-control" id="jumlah-rak"/>
                 </div>
                 <div class="form-group col-6">
                     <label for="level-rak">Level per Rak</label>
-                    <select class="form-control" id="level-rak"></select>
+                    <input type="number" class="form-control" id="level-rak"/>
                 </div>
             </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batalkan</button>
-        <button type="button" class="btn btn-primary">Tambah</button>
+        <button type="button" class="btn btn-secondary" id="cancel-form-gudang">Batalkan</button>
+        <button type="button" class="btn btn-primary" id="submit-form-gudang">Tambah</button>
       </div>
     </div>
   </div>

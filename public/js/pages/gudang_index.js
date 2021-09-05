@@ -12,7 +12,7 @@ $('#show-kantor-cabang').on('change', function() {
     getGudang(cabang_terpilih);
 })
 
-$(document).on('click', '#btn-tambah-divisi', function () {
+$(document).on('click', '#btn-tambah-gudang', function () {
     $('main').loading();
     $.ajax({
         type: 'POST',
@@ -35,23 +35,29 @@ $(document).on('click', '#btn-tambah-divisi', function () {
 })
 
 $(document).on('click', '#cancel-form-divisi', function () {
-    $('#tambah-divisi').modal('hide');
-    $('#tambah-divisi, .modal-backdrop').remove();
+    $('#tambah-gudang').modal('hide');
+    $('#tambah-gudang, .modal-backdrop').remove();
 })
 
-$(document).on('click', '#submit-form-divisi', function () {
-    $('#tambah-divisi').loading();
+$(document).on('click', '#submit-form-gudang', function () {
+    $('#tambah-gudang').loading();
 
-    let nama = $('#nama').val()
-    let alamat = $('#alamat').val()
+    let id_cabang = $('#form-kantor-cabang-hidden').val()
+    let id_terakhir = $('#form-id-gudang-terakhir').val()
+    let nama_gudang = $('#nama-gudang').val()
+    let jumlah_rak = $('#jumlah-rak').val()
+    let level_rak = $('#level-rak').val()
 
     $.ajax({
         type: 'POST',
         url: 'gudang/add_gudang_process',
         dataType: 'json',
         data: {
-            nama: nama,
-            alamat: alamat
+            id_cabang: id_cabang,
+            id_terakhir: id_terakhir,
+            nama_gudang: nama_gudang,
+            jumlah_rak: jumlah_rak,
+            level_rak: level_rak
         },
         success: function (response) {
             if(response.status == 'ok'){
@@ -59,13 +65,18 @@ $(document).on('click', '#submit-form-divisi', function () {
                 $('#form-success').removeClass('d-none');
 
                 setTimeout(function () {
-                    location.reload()
+                    $('#tambah-gudang').modal('hide');
+                    $('#tambah-gudang, .modal-backdrop').remove();
+                    
+                    $('#dataTable').DataTable().clear();
+                    $('#dataTable').DataTable().destroy();
+                    getGudang(id_cabang)
                 }, 1000)
             }else{
                 $('#form-loading').addClass('d-none');
                 $('#form-failed').removeClass('d-none');
 
-                $('#tambah-divisi').loading('stop');
+                $('#tambah-gudang').loading('stop');
             }
         }
     })
@@ -96,7 +107,6 @@ function getCabang()
 
 function getGudang(cabang)
 {
-    console.log(cabang)
     $('#dataTable').DataTable({
         "processing": true,
         "serverSide": false,
@@ -172,8 +182,8 @@ function getGudang(cabang)
                 'data': 'action',
                 'title': 'Action',
                 'render': function(data, type, row, meta) {
-                    var output = `<button type="button" id="update_divisi" data-id="${data.id_rak}" class="btn btn-warning btn-sm d-block"><i class="fa fa-edit"></i></button>`
-                    output += `<button type="button" id="delete_divisi" data-id="${data.id_rak}" class="btn btn-danger btn-sm d-block"><i class="fa fa-trash"></i></button>`;
+                    var output = `<button type="button" id="update_gudang" data-id="${data.id_rak}" class="btn btn-warning btn-sm d-block"><i class="fa fa-edit"></i></button>`
+                    output += `<button type="button" id="delete_gudang" data-id="${data.id_rak}" class="btn btn-danger btn-sm d-block"><i class="fa fa-trash"></i></button>`;
                     
                     return output;
                 }

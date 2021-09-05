@@ -71,36 +71,68 @@ class Gudang extends CI_Controller {
     {
         $data = array();
 
+        $data = array(
+            'value' => $this->input->post('value'),
+            'label' => $this->input->post('label'),
+        );
+
+        $this->load->model('Rak_model');
+
+        $get_id = $this->Rak_model->ambil_id_terakhir($this->input->post('value'));
+
+        if($get_id != null){
+            $id_terakhir = $get_id['id_rak'];
+            $id_terakhir = substr($id_terakhir, -1);
+        }else{
+            $id_terakhir = 0;
+        }
+        
+        $data['id_terakhir'] = $id_terakhir;
+
         $pages = $this->load->view('dashboard/gudang/add', $data, true);
 
         echo json_encode(['body' => $pages]);
     }
 
-    public function add_user_process()
+    public function add_gudang_process()
     {
-        $email = $this->input->post('email');
-        $username = $this->input->post('username');
-        $nama_lengkap = $this->input->post('nama_lengkap');
-        $cabang = $this->input->post('cabang');
-        $divisi = $this->input->post('divisi');
-        $status = 1;
-        $password = 'kcplangsa123';
+        $id_cabang = $this->input->post('id_cabang');
+        $nama_gudang = $this->input->post('nama_gudang');
+
+        $jumlah_level = $this->input->post('jumlah_rak');
+        $jumlah_sublevel = $this->input->post('level_rak');
+
+        $list = '';
+
+        for($i=1;$i<=$jumlah_level;$i++){
+            for($j=1;$j<=$jumlah_sublevel;$j++){
+                $list .= sprintf("%03d", $i).".".sprintf("%03d", $j);
+
+                if($i == $jumlah_level && $j == $jumlah_sublevel){
+                    $list .= "";
+                }else{
+                    $list .= "##";
+                }
+            }
+        }
+
+        $id_rak = sprintf("%03d", ($this->input->post('id_terakhir')+1));
+        $id_rak = $id_cabang . "RAK" . $id_rak;
 
         $data_post = array(
-            'email' => $email,
-            'username' => $username,
-            'nama_lengkap' => $nama_lengkap,
-            'cabang' => $cabang,
-            'divisi' => $divisi,
-            'status' => $status,
-            'password' => password_hash($password, PASSWORD_BCRYPT)
+            'id_rak' => $id_rak,
+            'id_cabang' => $id_cabang,
+            'nama' => $nama_gudang,
+            'jumlah_level' => $jumlah_level,
+            'jumlah_sublevel' => $jumlah_sublevel,
+            'list' => $list
         );
 
-        $this->load->model('User_model');
+        $this->load->model('Rak_model');
         
-        $do_register = $this->User_model->do_register($data_post);
+        $do_add_rak = $this->Rak_model->do_add_rak($data_post);
 
-        if($do_register){
+        if($do_add_rak){
             echo json_encode(['status' => 'ok']);
         }else{
             echo json_encode(['status' => 'error']);

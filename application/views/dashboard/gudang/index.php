@@ -34,7 +34,7 @@
                                 Data Gudang
                             </div>
                             <div class="col-6">
-                                <button id="btn-tambah-divisi" class="btn btn-primary btn-sm float-right">Tambah Gudang</button>
+                                <button id="btn-tambah-gudang" class="btn btn-primary btn-sm float-right">Tambah Gudang</button>
                             </div>
                         </div>
                     </div>
