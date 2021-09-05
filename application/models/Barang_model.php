@@ -13,4 +13,15 @@ class Barang_model extends CI_Model
 
         return $this->db->get()->result_array();
     }
+
+    public function do_add($data_post)
+    {
+        $query = $this->db->insert('barang', $data_post);
+
+        if($this->db->affected_rows() > 0){
+            return ['status' => 'ok', 'data' => $data_post];
+        }else{
+            return ['status' => 'error', 'data' => null];
+        }
+    }
 }

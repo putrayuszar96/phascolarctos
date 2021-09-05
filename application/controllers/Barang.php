@@ -101,34 +101,58 @@ class Barang extends CI_Controller {
         }
     }
 
-    public function add_user_process()
+    public function add_barang_process()
     {
-        $email = $this->input->post('email');
-        $username = $this->input->post('username');
-        $nama_lengkap = $this->input->post('nama_lengkap');
-        $cabang = $this->input->post('cabang');
-        $divisi = $this->input->post('divisi');
-        $status = 1;
-        $password = 'kcplangsa123';
+        // die(var_dump($this->input->post()));
+        
+        $uuid = $this->gen_uuid();
+        $nama_barang = $this->input->post('nama_barang');
+        $id_cabang = $this->input->post('id_cabang');
+        $id_divisi = $this->input->post('id_divisi');
+        $uploader = $this->input->post('uploader');
+        $status_pinjam = $this->input->post('status_pinjam');
+        $rak_posisi = $this->input->post('rak_posisi');
 
         $data_post = array(
-            'email' => $email,
-            'username' => $username,
-            'nama_lengkap' => $nama_lengkap,
-            'cabang' => $cabang,
-            'divisi' => $divisi,
-            'status' => $status,
-            'password' => password_hash($password, PASSWORD_BCRYPT)
+            'uuid_barang' => $uuid,
+            'nama_barang' => $nama_barang,
+            'id_cabang' => $id_cabang,
+            'id_divisi' => $id_divisi,
+            'uploader' => $uploader,
+            'status_pinjam' => $status_pinjam,
+            'rak_posisi' => $rak_posisi
         );
 
-        $this->load->model('User_model');
+        $this->load->model('Barang_model');
         
-        $do_register = $this->User_model->do_register($data_post);
+        $do_add = $this->Barang_model->do_add($data_post);
 
-        if($do_register){
+        if($do_add){
             echo json_encode(['status' => 'ok']);
         }else{
             echo json_encode(['status' => 'error']);
         }
     }
+
+    function gen_uuid() {
+        return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+        // 32 bits for "time_low"
+        mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
+
+        // 16 bits for "time_mid"
+        mt_rand( 0, 0xffff ),
+
+        // 16 bits for "time_hi_and_version",
+        // four most significant bits holds version number 4
+        mt_rand( 0, 0x0fff ) | 0x4000,
+
+        // 16 bits, 8 bits for "clk_seq_hi_res",
+        // 8 bits for "clk_seq_low",
+        // two most significant bits holds zero and one for variant DCE1.1
+        mt_rand( 0, 0x3fff ) | 0x8000,
+
+        // 48 bits for "node"
+        mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
+    );
+}
 }

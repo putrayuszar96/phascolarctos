@@ -15,7 +15,7 @@
                   <div class="alert alert-danger d-none" id="form-failed">Barang gagal ditambahkan! Mohon cek form anda atau hubungi administrator!</div>
                   <div class="alert alert-warning d-none" id="form-loading">Menambahkan...</div>
                 </div>
-                
+
                 <input type="hidden" class="form-control d-none" id="form-kantor-cabang-hidden" value="<?=$value;?>">
                 <input type="hidden" id="uploader" value="1" />
                 <input type="hidden" id="status-pinjam" value="1" />
@@ -46,8 +46,8 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batalkan</button>
-        <button type="button" class="btn btn-primary" id="submit-form-divisi">Tambah</button>
+        <button type="button" class="btn btn-secondary" id="cancel-form-barang" data-dismiss="modal">Batalkan</button>
+        <button type="button" class="btn btn-primary" id="submit-form-barang">Tambah</button>
       </div>
     </div>
   </div>
