@@ -48,10 +48,7 @@ class Rak extends CI_Controller {
             $return = array(
                 'nama_divisi' => $rr['nama_divisi'],
                 'jumlah_rak' => $rr['jumlah_rak'],
-                'rak' => [
-                    'utama' => $rr['rak_milik'],
-                    'tambahan' => $rr['rak_tambahan']
-                ],
+                'rak' => $rr['rak_milik'],
                 'action' => [
                     'id_rak' => $rr['id'],
                 ]
@@ -67,14 +64,11 @@ class Rak extends CI_Controller {
         }
     }
 
-    public function add_divisi_form()
+    public function add_rak_form()
     {
-        $data = array(
-            'value' => $this->input->post('value'),
-            'label' => $this->input->post('label'),
-        );
+        $data = array();
 
-        $pages = $this->load->view('dashboard/divisi/add', $data, true);
+        $pages = $this->load->view('dashboard/rak/add', $data, true);
 
         echo json_encode(['body' => $pages]);
     }

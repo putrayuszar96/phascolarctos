@@ -16,7 +16,7 @@ $(document).on('click', '#btn-tambah-divisi', function () {
     $('main').loading();
     $.ajax({
         type: 'POST',
-        url: 'divisi/add_divisi_form',
+        url: 'rak/add_rak_form',
         dataType: 'json',
         data: {
             'value': cabang_terpilih,
