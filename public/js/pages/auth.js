@@ -17,8 +17,12 @@ $(document).on('click', '#do-login', function () {
             if(response.status == 'ok'){
                 $('#processing').addClass('d-none');
                 $('#success').removeClass('d-none');
+
+                setTimeout(function() {
+                    window.location.replace('cabang');
+                }, 1000)
             }else{
-                let message = ' (Kesalahan: <span>'+response.data.data+'</span>)'
+                let message = ' (Kesalahan: <span>'+response.data.message+'</span>)'
                 $('#processing').addClass('d-none');
                 $('#failed').removeClass('d-none');
                 $('#failed').append(message)

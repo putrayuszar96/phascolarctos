@@ -7,14 +7,13 @@ class Auth extends CI_Controller {
 	public function __construct()
     {
         parent::__construct();
-        
-        if(isset($_SESSION['login'])){
-            redirect('Dashboard');
-        }
     }
 
 	public function index()
 	{
+        if(isset($_SESSION['login'])){
+            redirect('Dashboard');
+        }
         $this->data['title'] = 'ARIP System';
         $this->load->view('auth/index', $this->data);
 	}
@@ -29,10 +28,26 @@ class Auth extends CI_Controller {
         $cek_login = $this->User_model->cek_login($email, $password);
 
         if($cek_login['status'] == 'ok'){
-            echo json_encode(['status' => 'ok', 'data' => $cek_login]);
+            $session_data = [
+                'login' => true,
+                'id' => $cek_login['data']['id'],
+                'username' => $cek_login['data']['username'],
+                'nama_lengkap' => $cek_login['data']['nama_lengkap'],
+            ];
+
+            $this->session->set_userdata($session_data);
+
+            echo json_encode(['status' => 'ok', 'data' => $cek_login, 'message' => 'Login berhasil!']);
         }else{
-            echo json_encode(['status' => 'error', 'data' => $cek_login]);
+            echo json_encode(['status' => 'error', 'data' => $cek_login, 'message' => $cek_login['data']]);
         }
+    }
+
+    public function do_logout()
+    {
+        $this->session->sess_destroy();
+
+        redirect('Auth');
     }
 
     public function seed(){

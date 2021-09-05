@@ -8,9 +8,9 @@ class Cabang extends CI_Controller {
     {
         parent::__construct();
         
-        // if(!isset($_SESSION['login'])){
-        //     redirect('Auth');
-        // }
+        if($_SESSION['login'] != TRUE || !isset($_SESSION['login'])){
+            redirect('Auth');
+        }
 
         $this->data['scripts'] = [
             'https://code.jquery.com/jquery-3.6.0.min.js',
