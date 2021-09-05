@@ -21,7 +21,8 @@
                 </a>
                 <div class="collapse" id="menu-gudang" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="#">Rak</a>
+                        <a class="nav-link" href="#">Gudang</a>
+                        <a class="nav-link" href="#">Rak Milik</a>
                         <a class="nav-link" href="#">Barang</a>
                     </nav>
                 </div>
