@@ -75,6 +75,41 @@ $(document).on('click', '#submit-form-divisi', function () {
     })
 })
 
+$(document).on('change', '#divisi', function () {
+    $('#tambah-divisi').loading();
+
+    let id_divisi = $(this).val();
+
+    $.ajax({
+        type: 'POST',
+        url: 'barang/add_barang_form_get_rak_list',
+        dataType: 'json',
+        data: {
+            id_divisi: id_divisi,
+        },
+        success: function (response) {
+            if(response.status == 'ok'){
+                $('#daftar-rak-container').empty()
+                response.list.forEach(element => {
+                    let html = ''
+                    let value = element.split(".")
+
+                    html += `
+                        <input type="radio" id="lokasi-${value[0]}-${value[1]}" name="lokasi" value="${element}" />
+                        <label for="lokasi-${value[0]}-${value[1]}">${element}</label>
+                    `
+
+                    $('#daftar-rak-container').append(html)
+                });
+            }else{
+                console.log(response.status)
+            }
+
+            $('#tambah-pemilik').loading('stop');
+        }
+    })
+})
+
 function getCabang()
 {
     $.ajax({
@@ -155,7 +190,7 @@ function getBarang(filter)
                 'data': 'lokasi',
                 'title': 'Lokasi Rak',
                 'render': function(data, type, row, meta) {
-                    return (data != null && data != 'null' && data != '') ? data : '-';
+                    return (data != null && data != 'null' && data != '') ? `<span class="badge badge-primary">${data}</span>` : '-';
                 }
             },
             {
@@ -171,7 +206,7 @@ function getBarang(filter)
                 'data': 'status',
                 'title': 'Status',
                 'render': function(data, type, row, meta) {
-                    return (data != null && data != 'null' && data != '') ? data : '-';
+                    return (data != null && data != 'null' && data != '') ? (data == 1 ? "Tersedia" : "Dipinjam" ) : '-';
                 }
             },
             {

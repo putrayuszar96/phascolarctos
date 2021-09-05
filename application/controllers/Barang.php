@@ -68,13 +68,37 @@ class Barang extends CI_Controller {
         }
     }
 
-    public function add_gudang_form()
+    public function add_barang_form()
     {
+        $this->load->model('Divisi_model');
         $data = array();
 
-        $pages = $this->load->view('dashboard/gudang/add', $data, true);
+        $data = array(
+            'value' => $this->input->post('value'),
+            'label' => $this->input->post('label'),
+        );
+
+        $data['divisi'] = $this->Divisi_model->get_divisi_with_rak($this->input->post('value'));
+
+        $pages = $this->load->view('dashboard/barang/add', $data, true);
 
         echo json_encode(['body' => $pages]);
+    }
+
+    public function add_barang_form_get_rak_list()
+    {
+        $this->load->model('Rak_model');
+
+        $id_divisi = $this->input->post('id_divisi');
+
+        $list = $this->Rak_model->get_rak_milik_id($id_divisi);
+        $list = explode('##', $list['rak_milik']);
+
+        if(count($list) > 0){
+            echo json_encode(['status' => 'ok','list' => $list]);
+        }else{
+            echo json_encode(['status' => 'null','list' => null]);
+        }
     }
 
     public function add_user_process()

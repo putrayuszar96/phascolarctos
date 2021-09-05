@@ -28,6 +28,11 @@ class Rak_model extends CI_Model
         return $this->db->get()->result_array();
     }
 
+    public function get_rak_milik_id($id)
+    {
+        return $this->db->get_where('kepemilikan', array('id_divisi' => $id))->row_array();
+    }
+
     public function ambil_id_terakhir($cabang)
     {
         return $this->db->order_by('id_rak', 'DESC')->get_where('rak', array('id_cabang' => $cabang), 1)->row_array();
