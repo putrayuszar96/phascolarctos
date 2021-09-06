@@ -165,7 +165,16 @@ class Barang extends CI_Controller {
 
         $do_pinjam = $this->Barang_model->do_pinjam($id);
 
-        if($do_pinjam){
+        $data_post = array(
+            'uuid_barang' => $id,
+            'peminjam' => $_SESSION['id'],
+            'tanggal_pinjam' => strtotime(date('Y-m-d H:i:s'))
+        );
+
+        $this->load->model('Peminjaman_model');
+        $do_log = $this->Peminjaman_model->insert($data_post);
+
+        if($do_pinjam && $do_log){
             echo json_encode(['isConfirmed' => true, 'message' => 'Berhasil dipinjam']);
         }else{
             echo json_encode(['isConfirmed' => false, 'message' => 'Gagal dipinjam']);

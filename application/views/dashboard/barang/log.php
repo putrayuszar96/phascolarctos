@@ -32,8 +32,12 @@
                             <?php foreach($log as $l):?>
                                 <tr>
                                     <td><?=$l['nama_peminjam'];?></td>
-                                    <td><?=$l['tanggal_pinjam'];?></td>
-                                    <td><?=$l['tanggal_kembali'];?></td>
+                                    <td><?=date("d M Y H:i", $l['tanggal_pinjam']);?></td>
+                                    <?php if($l['tanggal_kembali'] == null):?>
+                                        <td><i>Belum dikembalikan</i></td>
+                                    <?php else: ?>
+                                        <td><?=date("d M Y H:i", $l['tanggal_kembali']);?></td>
+                                    <?php endif; ?>
                                 </tr>
                             <?php endforeach;?>
                         <?php else:?>
