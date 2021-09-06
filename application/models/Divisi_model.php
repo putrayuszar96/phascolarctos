@@ -42,4 +42,15 @@ class Divisi_model extends CI_Model
 
         return $this->db->get()->result_array();
     }
+
+    public function delete($id)
+    {
+        $this->db->delete('divisi', array('id_ai_divisi' => $id));
+
+        if($this->db->affected_rows() > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

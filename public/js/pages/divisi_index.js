@@ -168,8 +168,8 @@ function getDivisi(cabang)
                 'data': 'action',
                 'title': 'Action',
                 'render': function(data, type, row, meta) {
-                    var output = `<button type="button" id="update_divisi" data-id="${data.id_ai_divisi}" class="btn btn-warning btn-sm d-block"><i class="fa fa-edit"></i></button>`
-                    output += `<button type="button" id="delete_divisi" data-id="${data.id_ai_divisi}" class="btn btn-danger btn-sm d-block"><i class="fa fa-trash"></i></button>`;
+                    var output = `<button type="button" id="update_divisi" data-id="${data.id_ai_divisi}" class="btn btn-link text-success btn-sm d-block"><i class="fa fa-edit"></i> Edit</button>`
+                    output += `<button type="button" id="delete_divisi" data-id="${data.id_ai_divisi}" class="btn btn-link text-danger btn-sm d-block"><i class="fa fa-trash"></i> Hapus</button>`;
                     
                     return output;
                 }
@@ -182,3 +182,52 @@ function getDivisi(cabang)
         $('#tampilan-divisi').removeClass('d-none');
     }
 }
+
+$(document).on('click', '#delete_divisi', function () {
+    var id_cabang = $(this).data('id')
+
+    Swal.fire({
+        title: 'Anda akan menghapus divisi ini?',
+        text: "Anda yakin ingin menghapus divisi ini!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, hapus divisi!',
+        preConfirm: () => {
+            return fetch(`divisi/delete/${id_cabang}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(response.statusText)
+                }
+                return response.json()
+            })
+            .catch(error => {
+                Swal.showValidationMessage(
+                    `Request failed: ${error}`
+                )
+            })
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+    })
+    .then((result) => {
+        if (result.value.isConfirmed) {
+            Swal.fire({
+                title: `Divisi telah dihapus!`,
+                confirmButtonText: `Ok`,
+            })
+            .then((result) => {
+                if(result.isConfirmed){
+                    $('#dataTable').DataTable().clear();
+                    $('#dataTable').DataTable().destroy();
+
+                    getDivisi(cabang_terpilih)
+                }
+            })
+        }else{
+            Swal.fire({
+                title: `Divisi ini gagal dihapus!`,
+            })
+        }
+    })
+})
