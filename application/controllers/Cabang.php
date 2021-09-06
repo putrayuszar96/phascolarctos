@@ -46,7 +46,6 @@ class Cabang extends CI_Controller {
                 'nama' => $rr['nama'],
                 'alamat' => $rr['alamat'],
                 'jumlah_divisi' => $rr['jumlah_divisi'],
-                'jumlah_pegawai' => $rr['jumlah_pegawai'],
                 'action' => [
                     'id_ai_cabang' => $rr['id_ai_cabang'],
                     'id_cabang' => $rr['id_cabang']

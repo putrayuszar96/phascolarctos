@@ -27,7 +27,6 @@
                                             <tr>
                                                 <th>Kantor Cabang</th>
                                                 <th>Alamat</th>
-                                                <th>Jumlah Gudang</th>
                                                 <th>Jumlah Divisi</th>
                                                 <th>Action</th>
                                             </tr>
@@ -36,7 +35,6 @@
                                         <tfoot>
                                             <th>Kantor Cabang</th>
                                             <th>Alamat</th>
-                                            <th>Jumlah Gudang</th>
                                             <th>Jumlah Divisi</th>
                                             <th>Action</th>
                                         </tfoot>

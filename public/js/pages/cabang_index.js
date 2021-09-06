@@ -83,7 +83,7 @@ function getCabang()
         },
         'sAjaxDataProp': '',
         'columnDefs': [{
-                targets: [0, 1, 2, 3, 4],
+                targets: [0, 1, 2, 3],
                 visible: true
             },
             {
@@ -116,14 +116,6 @@ function getCabang()
             },
             {
                 'targets': 3,
-                'data': 'jumlah_pegawai',
-                'title': 'Jumlah Pegawai',
-                'render': function(data, type, row, meta) {
-                    return (data != null && data != 'null' && data != '') ? data + " pegawai" : '-';
-                }
-            },
-            {
-                'targets': 4,
                 'data': 'action',
                 'title': 'Action',
                 'render': function(data, type, row, meta) {
