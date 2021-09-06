@@ -17,7 +17,8 @@ class Barang extends CI_Controller {
             'https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js',
             'https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js',
             'https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js',
-            'https://cdn.jsdelivr.net/npm/jquery-easy-loading@1.3.0/dist/jquery.loading.min.js'
+            'https://cdn.jsdelivr.net/npm/jquery-easy-loading@1.3.0/dist/jquery.loading.min.js',
+            'https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.all.min.js'
         ];
 
         $this->data['controller'] = "Barang";
@@ -53,6 +54,7 @@ class Barang extends CI_Controller {
                 'uploader' => $rr['nama_uploader'],
                 'status' => $rr['status_pinjam'],
                 'action' => [
+                    'status' => $rr['status_pinjam'],
                     'id' => $rr['id_barang'],
                     'uuid' => $rr['uuid_barang'],
                 ]
@@ -136,23 +138,53 @@ class Barang extends CI_Controller {
 
     function gen_uuid() {
         return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
-        // 32 bits for "time_low"
-        mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
+            // 32 bits for "time_low"
+            mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
 
-        // 16 bits for "time_mid"
-        mt_rand( 0, 0xffff ),
+            // 16 bits for "time_mid"
+            mt_rand( 0, 0xffff ),
 
-        // 16 bits for "time_hi_and_version",
-        // four most significant bits holds version number 4
-        mt_rand( 0, 0x0fff ) | 0x4000,
+            // 16 bits for "time_hi_and_version",
+            // four most significant bits holds version number 4
+            mt_rand( 0, 0x0fff ) | 0x4000,
 
-        // 16 bits, 8 bits for "clk_seq_hi_res",
-        // 8 bits for "clk_seq_low",
-        // two most significant bits holds zero and one for variant DCE1.1
-        mt_rand( 0, 0x3fff ) | 0x8000,
+            // 16 bits, 8 bits for "clk_seq_hi_res",
+            // 8 bits for "clk_seq_low",
+            // two most significant bits holds zero and one for variant DCE1.1
+            mt_rand( 0, 0x3fff ) | 0x8000,
 
-        // 48 bits for "node"
-        mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
-    );
-}
+            // 48 bits for "node"
+            mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
+        );
+    }
+
+    public function pinjam_barang()
+    {
+        $this->load->model('Barang_model');
+
+        $id = $this->uri->segment('3');
+
+        $do_pinjam = $this->Barang_model->do_pinjam($id);
+
+        if($do_pinjam){
+            echo json_encode(['isConfirmed' => true, 'message' => 'Berhasil dipinjam']);
+        }else{
+            echo json_encode(['isConfirmed' => false, 'message' => 'Gagal dipinjam']);
+        }
+    }
+
+    public function kembali_barang()
+    {
+        $this->load->model('Barang_model');
+
+        $id = $this->uri->segment('3');
+
+        $do_kembali = $this->Barang_model->do_kembali($id);
+
+        if($do_kembali){
+            echo json_encode(['isConfirmed' => true, 'message' => 'Berhasil dikembalikan']);
+        }else{
+            echo json_encode(['isConfirmed' => false, 'message' => 'Gagal dikembalikan']);
+        }
+    }
 }

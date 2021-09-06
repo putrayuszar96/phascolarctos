@@ -24,4 +24,30 @@ class Barang_model extends CI_Model
             return ['status' => 'error', 'data' => null];
         }
     }
+
+    public function do_pinjam($id)
+    {
+        $this->db->set('status_pinjam', 0);
+        $this->db->where('uuid_barang', $id);
+        $this->db->update('barang');
+
+        if($this->db->affected_rows() > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function do_kembali($id)
+    {
+        $this->db->set('status_pinjam', 1);
+        $this->db->where('uuid_barang', $id);
+        $this->db->update('barang');
+
+        if($this->db->affected_rows() > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

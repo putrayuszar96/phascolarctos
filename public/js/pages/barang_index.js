@@ -233,15 +233,15 @@ function getBarang(filter)
                 'data': 'action',
                 'title': 'Action',
                 'render': function(data, type, row, meta) {
-                    var output = `<button type="button" id="update_barang" data-id="${data.uuid}" class="btn btn-warning btn-sm d-block"><i class="fa fa-edit"></i></button>`
+                    var output = `<button type="button" id="update_barang" data-id="${data.uuid}" class="btn btn-sm d-block btn-link text-success"><i class="fa fa-edit"></i> Update Barang</button>`
                     
-                    if(data.status_pinjam == 1){
-                        output += `<button type="button" id="btn-pinjam-barang" data-id="${data.uuid}" class="btn btn-success btn-sm d-block my-2"><i class="fa fa-sign-out-alt"></i></button>` 
+                    if(data.status == 1){
+                        output += `<button type="button" id="pinjam_barang" data-id="${data.uuid}" class="btn btn-sm d-block my-2 btn-link text-info"><i class="fa fa-sign-out-alt"></i> Pinjam Barang</button>` 
                     }else{
-                        output += `<button type="button" id="btn-kembalikan-barang" data-id="${data.uuid}" class="btn btn-info btn-sm d-block my-2"><i class="fa fa-sign-in-alt"></i></button>` 
+                        output += `<button type="button" id="kembali_barang" data-id="${data.uuid}" class="btn btn-sm d-block my-2 btn-link text-info"><i class="fa fa-sign-out-alt"></i> Kembali Barang</button>` 
                     }
-                    output += `<button type="button" id="delete_barang" data-id="${data.uuid}" class="btn btn-danger btn-sm d-block"><i class="fa fa-trash"></i></button>`;
-                    
+                    output += `<button type="button" id="delete_barang" data-id="${data.uuid}" class="btn btn-sm d-block btn-link text-danger"><i class="fa fa-trash"></i> Hapus Barang</button>`;
+
                     return output;
                 }
             }
@@ -253,3 +253,109 @@ function getBarang(filter)
         $('#tampilan-barang').removeClass('d-none');
     }
 }
+
+$(document).on('click', '#pinjam_barang', function () {
+    var uuid_barang = $(this).data('id')
+
+    Swal.fire({
+        title: 'Anda akan meminjam barang ini?',
+        text: "Barang ini akan anda pinjam!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, pinjam barang!',
+        preConfirm: () => {
+            return fetch(`barang/pinjam_barang/${uuid_barang}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(response.statusText)
+                }
+                return response.json()
+            })
+            .catch(error => {
+                Swal.showValidationMessage(
+                    `Request failed: ${error}`
+                )
+            })
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+    })
+    .then((result) => {
+        if (result.value.isConfirmed) {
+            Swal.fire({
+                title: `Barang ini anda pinjam!`,
+                confirmButtonText: `Ok`,
+            })
+            .then((result) => {
+                if(result.isConfirmed){
+                    let filter = {
+                        cabang: cabang_terpilih
+                    }
+
+                    $('#dataTable').DataTable().clear();
+                    $('#dataTable').DataTable().destroy();
+
+                    getBarang(filter)
+                }
+            })
+        }else{
+            Swal.fire({
+                title: `Barang ini gagal dipinjam!`,
+            })
+        }
+    })
+})
+
+$(document).on('click', '#kembali_barang', function () {
+    var uuid_barang = $(this).data('id')
+
+    Swal.fire({
+        title: 'Anda akan mengembalikan barang ini?',
+        text: "Barang ini akan anda kembalikan!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, kembalikan barang!',
+        preConfirm: () => {
+            return fetch(`barang/kembali_barang/${uuid_barang}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(response.statusText)
+                }
+                return response.json()
+            })
+            .catch(error => {
+                Swal.showValidationMessage(
+                    `Request failed: ${error}`
+                )
+            })
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+    })
+    .then((result) => {
+        if (result.value.isConfirmed) {
+            Swal.fire({
+                title: `Barang ini anda kembalikan!`,
+                confirmButtonText: `Ok`,
+            })
+            .then((result) => {
+                if(result.isConfirmed){
+                    let filter = {
+                        cabang: cabang_terpilih
+                    }
+                    
+                    $('#dataTable').DataTable().clear();
+                    $('#dataTable').DataTable().destroy();
+
+                    getBarang(filter)
+                }
+            })
+        }else{
+            Swal.fire({
+                title: `Barang ini gagal dikembalikan!`,
+            })
+        }
+    })
+})
