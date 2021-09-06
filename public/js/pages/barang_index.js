@@ -222,10 +222,20 @@ function getBarang(filter)
             },
             {
                 'targets': 4,
-                'data': 'status',
+                'data': 'action',
                 'title': 'Status',
                 'render': function(data, type, row, meta) {
-                    return (data != null && data != 'null' && data != '') ? (data == 1 ? "Tersedia" : "Dipinjam" ) : '-';
+                    var output = '';
+
+                    if(data.status == 1){
+                        output += '<span class="d-block">Tersedia</span>'
+                    }else{
+                        output += '<span class="d-block">Dipinjam</span>'
+                    }
+
+                    output += `<button type="button" id="cek_status" data-id="${data.uuid}" class="btn d-block my-2 btn-link text-info"><i class="fa fa-eye"></i> Cek Status Log</button>`
+
+                    return output;
                 }
             },
             {
@@ -253,6 +263,34 @@ function getBarang(filter)
         $('#tampilan-barang').removeClass('d-none');
     }
 }
+
+$(document).on('click', '#cek_status', function () {
+    var uuid_barang = $(this).data('id')
+
+    $('main').loading();
+    $.ajax({
+        type: 'POST',
+        url: 'barang/show_status_log',
+        dataType: 'json',
+        data: {
+            'uuid': uuid_barang
+        },
+        success: function (response) {
+            $('main').after(response.body);
+            $('main').loading('stop');
+            $('.modal').modal({
+                'show': true,
+                'backdrop': 'static',
+                'keyboard': false
+            });
+        }
+    })
+})
+
+$(document).on('click', '#log-peminjaman-close', function () {
+    $('.modal').modal('hide');
+    $('.modal, .modal-backdrop').remove();
+})
 
 $(document).on('click', '#pinjam_barang', function () {
     var uuid_barang = $(this).data('id')

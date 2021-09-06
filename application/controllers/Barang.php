@@ -52,7 +52,6 @@ class Barang extends CI_Controller {
                 'nama_divisi' => $rr['nama_divisi'],
                 'lokasi' => $rr['rak_posisi'],
                 'uploader' => $rr['nama_uploader'],
-                'status' => $rr['status_pinjam'],
                 'action' => [
                     'status' => $rr['status_pinjam'],
                     'id' => $rr['id_barang'],
@@ -186,5 +185,23 @@ class Barang extends CI_Controller {
         }else{
             echo json_encode(['isConfirmed' => false, 'message' => 'Gagal dikembalikan']);
         }
+    }
+
+    public function show_status_log()
+    {
+        $data = array();
+        $uuid_barang = $this->input->post('uuid');
+
+        $this->load->model('Barang_model');
+        $data_barang = $this->Barang_model->get_by_uuid($uuid_barang);
+
+        $data['status'] = $data_barang['status_pinjam'];
+
+        $this->load->model('Peminjaman_model');
+        $data['log'] = $this->Peminjaman_model->get_by_uuid($uuid_barang);
+
+        $pages = $this->load->view('dashboard/barang/log', $data, true);
+
+        echo json_encode(['body' => $pages]);
     }
 }

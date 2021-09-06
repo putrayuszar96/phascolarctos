@@ -14,6 +14,11 @@ class Barang_model extends CI_Model
         return $this->db->get()->result_array();
     }
 
+    public function get_by_uuid($uuid)
+    {
+        return $this->db->get_where('barang', array('uuid_barang' => $uuid))->row_array();
+    }
+
     public function do_add($data_post)
     {
         $query = $this->db->insert('barang', $data_post);
