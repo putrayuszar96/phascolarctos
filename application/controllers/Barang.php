@@ -189,7 +189,12 @@ class Barang extends CI_Controller {
 
         $do_kembali = $this->Barang_model->do_kembali($id);
 
-        if($do_kembali){
+        $date = strtotime(date('Y-m-d H:i'));
+
+        $this->load->model('Peminjaman_model');
+        $do_log = $this->Peminjaman_model->kembali($id, $date);
+
+        if($do_kembali && $do_log){
             echo json_encode(['isConfirmed' => true, 'message' => 'Berhasil dikembalikan']);
         }else{
             echo json_encode(['isConfirmed' => false, 'message' => 'Gagal dikembalikan']);

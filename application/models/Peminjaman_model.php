@@ -23,4 +23,18 @@ class Peminjaman_model extends CI_Model
             return ['status' => 'error', 'data' => null];
         }
     }
+
+    public function kembali($uuid_barang, $date)
+    {
+        $this->db->where('uuid_barang', $uuid_barang);
+        $this->db->where('tanggal_kembali IS NULL', null, false);
+        $this->db->set('tanggal_kembali', $date);
+        $this->db->update('peminjaman');
+
+        if($this->db->affected_rows() > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
