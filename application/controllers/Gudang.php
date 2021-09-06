@@ -17,7 +17,8 @@ class Gudang extends CI_Controller {
             'https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js',
             'https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js',
             'https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js',
-            'https://cdn.jsdelivr.net/npm/jquery-easy-loading@1.3.0/dist/jquery.loading.min.js'
+            'https://cdn.jsdelivr.net/npm/jquery-easy-loading@1.3.0/dist/jquery.loading.min.js',
+            'https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.all.min.js'
         ];
 
         $this->data['controller'] = "Gudang";
@@ -136,6 +137,20 @@ class Gudang extends CI_Controller {
             echo json_encode(['status' => 'ok']);
         }else{
             echo json_encode(['status' => 'error']);
+        }
+    }
+
+    public function delete()
+    {
+        $id = $this->uri->segment(3);
+
+        $this->load->model('Rak_model');
+        $hapus = $this->Rak_model->delete_rak($id);
+
+        if($hapus == true){
+            echo json_encode(['isConfirmed' => true, 'message' => 'Berhasil dihapus']);
+        }else{
+            echo json_encode(['isConfirmed' => false, 'message' => 'Gagal dihapus']);
         }
     }
 }

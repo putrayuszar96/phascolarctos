@@ -59,4 +59,15 @@ class Rak_model extends CI_Model
             return ['status' => 'error', 'data' => null];
         }
     }
+
+    public function delete($id)
+    {
+        $this->db->delete('rak', array('id_rak' => $id));
+
+        if($this->db->affected_rows() > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

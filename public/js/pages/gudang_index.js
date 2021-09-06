@@ -182,8 +182,8 @@ function getGudang(cabang)
                 'data': 'action',
                 'title': 'Action',
                 'render': function(data, type, row, meta) {
-                    var output = `<button type="button" id="update_gudang" data-id="${data.id_rak}" class="btn btn-warning btn-sm d-block"><i class="fa fa-edit"></i></button>`
-                    output += `<button type="button" id="delete_gudang" data-id="${data.id_rak}" class="btn btn-danger btn-sm d-block"><i class="fa fa-trash"></i></button>`;
+                    var output = `<button type="button" id="update_gudang" data-id="${data.id_rak}" class="btn btn-link text-success btn-sm d-block"><i class="fa fa-edit"></i> Edit</button>`
+                    output += `<button type="button" id="delete_gudang" data-id="${data.id_rak}" class="btn btn-link text-danger btn-sm d-block"><i class="fa fa-trash"></i> Hapus</button>`;
                     
                     return output;
                 }
@@ -196,3 +196,52 @@ function getGudang(cabang)
         $('#tampilan-gudang').removeClass('d-none');
     }
 }
+
+$(document).on('click', '#delete_gudang', function () {
+    var id_rak = $(this).data('id')
+
+    Swal.fire({
+        title: 'Anda akan menghapus gudang ini?',
+        text: "Anda yakin ingin menghapus gudang ini!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, hapus gudang!',
+        preConfirm: () => {
+            return fetch(`rak/delete/${id_rak}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(response.statusText)
+                }
+                return response.json()
+            })
+            .catch(error => {
+                Swal.showValidationMessage(
+                    `Request failed: ${error}`
+                )
+            })
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+    })
+    .then((result) => {
+        if (result.value.isConfirmed) {
+            Swal.fire({
+                title: `Gudang telah dihapus!`,
+                confirmButtonText: `Ok`,
+            })
+            .then((result) => {
+                if(result.isConfirmed){
+                    $('#dataTable').DataTable().clear();
+                    $('#dataTable').DataTable().destroy();
+
+                    getGudang(cabang_terpilih)
+                }
+            })
+        }else{
+            Swal.fire({
+                title: `Gudang ini gagal dihapus!`,
+            })
+        }
+    })
+})
