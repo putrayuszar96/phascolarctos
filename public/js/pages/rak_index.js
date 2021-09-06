@@ -213,8 +213,8 @@ function getRak(cabang)
                 'data': 'action',
                 'title': 'Action',
                 'render': function(data, type, row, meta) {
-                    var output = `<button type="button" id="update_divisi" data-id="${data.id_ai_divisi}" class="btn btn-warning btn-sm d-block"><i class="fa fa-edit"></i></button>`
-                    output += `<button type="button" id="delete_divisi" data-id="${data.id_ai_divisi}" class="btn btn-danger btn-sm d-block"><i class="fa fa-trash"></i></button>`;
+                    var output = `<button type="button" id="update_pemilik" data-id="${data.id_rak}" class="btn btn-link text-success btn-sm d-block"><i class="fa fa-edit"></i> Edit</button>`
+                    output += `<button type="button" id="delete_pemilik" data-id="${data.id_rak}" class="btn btn-link text-danger btn-sm d-block"><i class="fa fa-trash"></i> Hapus</button>`;
                     
                     return output;
                 }
@@ -227,3 +227,52 @@ function getRak(cabang)
         $('#tampilan-rak').removeClass('d-none');
     }
 }
+
+$(document).on('click', '#delete_pemilik', function () {
+    var id_rak = $(this).data('id')
+
+    Swal.fire({
+        title: 'Anda akan menghapus rak ini?',
+        text: "Anda yakin ingin menghapus rak ini!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, hapus rak!',
+        preConfirm: () => {
+            return fetch(`rak/delete/${id_rak}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(response.statusText)
+                }
+                return response.json()
+            })
+            .catch(error => {
+                Swal.showValidationMessage(
+                    `Request failed: ${error}`
+                )
+            })
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+    })
+    .then((result) => {
+        if (result.value.isConfirmed) {
+            Swal.fire({
+                title: `Rak telah dihapus!`,
+                confirmButtonText: `Ok`,
+            })
+            .then((result) => {
+                if(result.isConfirmed){
+                    $('#dataTable').DataTable().clear();
+                    $('#dataTable').DataTable().destroy();
+
+                    getRak(cabang_terpilih)
+                }
+            })
+        }else{
+            Swal.fire({
+                title: `Rak ini gagal dihapus!`,
+            })
+        }
+    })
+})

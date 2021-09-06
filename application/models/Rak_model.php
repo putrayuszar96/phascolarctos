@@ -60,9 +60,20 @@ class Rak_model extends CI_Model
         }
     }
 
-    public function delete($id)
+    public function delete_rak($id)
     {
         $this->db->delete('rak', array('id_rak' => $id));
+
+        if($this->db->affected_rows() > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function delete_kepemilikan($id)
+    {
+        $this->db->delete('kepemilikan', array('id' => $id));
 
         if($this->db->affected_rows() > 0){
             return true;

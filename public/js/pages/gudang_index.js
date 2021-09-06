@@ -209,7 +209,7 @@ $(document).on('click', '#delete_gudang', function () {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Ya, hapus gudang!',
         preConfirm: () => {
-            return fetch(`rak/delete/${id_rak}`)
+            return fetch(`gudang/delete/${id_rak}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(response.statusText)
