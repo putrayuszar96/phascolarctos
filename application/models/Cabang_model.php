@@ -11,4 +11,15 @@ class Cabang_model extends CI_Model
 
         return $this->db->get()->result_array();
     }
+
+    public function delete($id)
+    {
+        $this->db->delete('kantor_cabang', array('id_ai_cabang' => $id));
+
+        if($this->db->affected_rows() > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
