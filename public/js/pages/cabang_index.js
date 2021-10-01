@@ -33,7 +33,7 @@ $(document).on('click', '#submit-form-cabang', function () {
 
     $.ajax({
         type: 'POST',
-        url: 'user/add_cabang_process',
+        url: 'cabang/add_cabang_process',
         dataType: 'json',
         data: {
             nama: nama,

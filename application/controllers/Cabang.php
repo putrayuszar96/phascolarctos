@@ -70,6 +70,34 @@ class Cabang extends CI_Controller {
         echo json_encode(['body' => $pages]);
     }
 
+    public function add_cabang_process()
+    {
+        $this->load->model('Cabang_model');
+        $cabang_terakhir = $this->Cabang_model->get_latest_id();
+        
+        if($cabang_terakhir == NULL){
+            $cabang_terakhir = 0;
+        }
+
+        $id_cabang = "CAB". sprintf("%03d", ($cabang_terakhir+1));
+        $nama = $this->input->post('nama');
+        $alamat = $this->input->post('alamat');
+
+        $data_post = array(
+            'id_cabang' => $id_cabang,
+            'nama' => $nama,
+            'alamat' => $alamat
+        );
+        
+        $do_add = $this->Cabang_model->do_add($data_post);
+
+        if($do_add){
+            echo json_encode(['status' => 'ok']);
+        }else{
+            echo json_encode(['status' => 'error']);
+        }
+    }
+
     public function add_user_process()
     {
         $email = $this->input->post('email');
