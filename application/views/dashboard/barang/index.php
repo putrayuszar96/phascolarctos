@@ -9,7 +9,7 @@
             <div class="col-xl-12">
                 <div class="card mb-4">
                     <div class="card-header">
-                        Barang
+                        Berkas
                     </div>
                     <div class="card-body">
                         <div class="row">
@@ -31,10 +31,10 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-6">
-                                Data Barang
+                                Data Berkas
                             </div>
                             <div class="col-6">
-                                <button id="btn-tambah-divisi" class="btn btn-primary btn-sm float-right">Tambah Barang</button>
+                                <button id="btn-tambah-divisi" class="btn btn-primary btn-sm float-right">Tambah Berkas</button>
                             </div>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                         <thead>
                                             <tr>
-                                                <th>Nama Barang</th>
+                                                <th>Nama Berkas</th>
                                                 <th>Divisi</th>
                                                 <th>Lokasi Rak</th>
                                                 <th>Uploader</th>
@@ -56,7 +56,7 @@
                                         
                                         <tfoot>
                                             <tr>
-                                                <th>Nama Barang</th>
+                                                <th>Nama Berkas</th>
                                                 <th>Divisi</th>
                                                 <th>Lokasi Rak</th>
                                                 <th>Uploader</th>

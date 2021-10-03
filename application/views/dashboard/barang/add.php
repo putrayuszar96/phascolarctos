@@ -11,8 +11,8 @@
         <form class="form" id="form-divisi">
             <div class="row">
                 <div class="col-12">
-                  <div class="alert alert-success d-none" id="form-success">Barang berhasil ditambahkan! Halaman akan direfresh...</div>
-                  <div class="alert alert-danger d-none" id="form-failed">Barang gagal ditambahkan! Mohon cek form anda atau hubungi administrator!</div>
+                  <div class="alert alert-success d-none" id="form-success">Berkas berhasil ditambahkan! Halaman akan direfresh...</div>
+                  <div class="alert alert-danger d-none" id="form-failed">Berkas gagal ditambahkan! Mohon cek form anda atau hubungi administrator!</div>
                   <div class="alert alert-warning d-none" id="form-loading">Menambahkan...</div>
                 </div>
 
@@ -33,8 +33,8 @@
                     </select>
                 </div>
                 <div class="form-group col-12">
-                    <label for="nama-barang">Nama Barang</label>
-                    <input type="text" class="form-control" id="nama-barang" placeholder="Masukkan nama barang...">
+                    <label for="nama-barang">Nama Berkas</label>
+                    <input type="text" class="form-control" id="nama-barang" placeholder="Masukkan nama berkas...">
                 </div>
                 <div class="form-group col-12">
                     <label for="rak">Posisi Rak</label>
