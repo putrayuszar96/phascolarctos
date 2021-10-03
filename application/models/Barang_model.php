@@ -55,4 +55,15 @@ class Barang_model extends CI_Model
             return false;
         }
     }
+
+    public function delete($id)
+    {
+        $this->db->delete('barang', array('uuid_barang' => $id));
+
+        if($this->db->affected_rows() > 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

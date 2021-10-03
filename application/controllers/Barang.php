@@ -21,15 +21,15 @@ class Barang extends CI_Controller {
             'https://cdn.jsdelivr.net/npm/sweetalert2@11.1.4/dist/sweetalert2.all.min.js'
         ];
 
-        $this->data['controller'] = "Barang";
+        $this->data['controller'] = "Berkas";
     }
 
 	public function index()
 	{
         $this->data['meta'] = [
-            'title' => 'Barang - ARIP System',
+            'title' => 'Berkas - ARIP System',
             'id_page' => 'barang_index',
-            'name' => 'Daftar Barang'
+            'name' => 'Daftar Berkas'
         ];
         $this->data['sidebar'] = $this->load->view('components/sidebar', array('active' => 'barang'), true);
         $this->data['body'] = $this->load->view('dashboard/barang/index', $this->data, true);
@@ -217,5 +217,19 @@ class Barang extends CI_Controller {
         $pages = $this->load->view('dashboard/barang/log', $data, true);
 
         echo json_encode(['body' => $pages]);
+    }
+
+    public function delete()
+    {
+        $id = $this->uri->segment(3);
+
+        $this->load->model('Barang_model');
+        $hapus = $this->Barang_model->delete($id);
+
+        if($hapus == true){
+            echo json_encode(['isConfirmed' => true, 'message' => 'Berhasil dihapus']);
+        }else{
+            echo json_encode(['isConfirmed' => false, 'message' => 'Gagal dihapus']);
+        }
     }
 }

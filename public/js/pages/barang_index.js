@@ -397,3 +397,55 @@ $(document).on('click', '#kembali_barang', function () {
         }
     })
 })
+
+$(document).on('click', '#delete_barang', function () {
+    var id_cabang = $(this).data('id')
+    let filter = {
+        cabang: cabang_terpilih
+    }
+
+    Swal.fire({
+        title: 'Anda akan menghapus berkas ini?',
+        text: "Anda yakin ingin menghapus berkas ini!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ya, hapus berkas!',
+        preConfirm: () => {
+            return fetch(`barang/delete/${id_cabang}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(response.statusText)
+                }
+                return response.json()
+            })
+            .catch(error => {
+                Swal.showValidationMessage(
+                    `Request failed: ${error}`
+                )
+            })
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+    })
+    .then((result) => {
+        if (result.value.isConfirmed) {
+            Swal.fire({
+                title: `Berkas telah dihapus!`,
+                confirmButtonText: `Ok`,
+            })
+            .then((result) => {
+                if(result.isConfirmed){
+                    $('#dataTable').DataTable().clear();
+                    $('#dataTable').DataTable().destroy();
+
+                    getBarang(filter)
+                }
+            })
+        }else{
+            Swal.fire({
+                title: `Berkas ini gagal dihapus!`,
+            })
+        }
+    })
+})
