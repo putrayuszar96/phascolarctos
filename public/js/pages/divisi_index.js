@@ -36,7 +36,6 @@ $(document).on('click', '#submit-form-divisi', function () {
     $('#tambah-divisi').loading();
 
     let nama = $('#nama').val()
-    let id_terakhir = $('#form-id-divisi-terakhir').val()
     let id_cabang = $('#form-kantor-cabang-hidden').val()
 
     $.ajax({
@@ -73,7 +72,8 @@ $(document).on('click', '#submit-form-divisi', function () {
 
 function getDivisi(cabang)
 {
-    console.log(cabang)
+    var divisi_user = $('#divisi-user').val();
+
     $('#dataTable').DataTable({
         "processing": true,
         "serverSide": false,
@@ -134,8 +134,12 @@ function getDivisi(cabang)
                 'data': 'action',
                 'title': 'Action',
                 'render': function(data, type, row, meta) {
-                    var output = `<button type="button" id="update_divisi" data-id="${data.id_ai_divisi}" class="btn btn-link text-success btn-sm d-block"><i class="fa fa-edit"></i> Edit</button>`
-                    output += `<button type="button" id="delete_divisi" data-id="${data.id_ai_divisi}" class="btn btn-link text-danger btn-sm d-block"><i class="fa fa-trash"></i> Hapus</button>`;
+                    if(divisi_user == 'ADM'){
+                        var output = `<button type="button" id="update_divisi" data-id="${data.id_ai_divisi}" class="btn btn-link text-success btn-sm d-block"><i class="fa fa-edit"></i> Edit</button>`
+                        output += `<button type="button" id="delete_divisi" data-id="${data.id_ai_divisi}" class="btn btn-link text-danger btn-sm d-block"><i class="fa fa-trash"></i> Hapus</button>`;
+                    }else{
+                        var output = '<small><i>No action allowed</i></small>'
+                    }
                     
                     return output;
                 }
