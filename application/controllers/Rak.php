@@ -41,9 +41,7 @@ class Rak extends CI_Controller {
     {
         $this->load->model('Rak_model');
 
-        $cabang = $this->input->post('cabang');
-
-        $raw_result = $this->Rak_model->get_rak_milik($cabang);
+        $raw_result = $this->Rak_model->get_rak_milik();
         $return_result = array();
 
         foreach($raw_result as $rr){
@@ -66,23 +64,23 @@ class Rak extends CI_Controller {
         }
     }
 
-    public function add_rak_form()
+    public function add_form()
     {
+        $this->data['meta'] = [
+            'title' => 'Gudang - ARIP System',
+            'id_page' => 'rak_add',
+            'name' => 'Tambah Rak'
+        ];
+
         $this->load->model('Divisi_model');
         $this->load->model('Rak_model');
-        $data = array();
 
-        $data = array(
-            'value' => $this->input->post('value'),
-            'label' => $this->input->post('label'),
-        );
+        $this->data['divisi'] = $this->Divisi_model->get_divisi_raw();
+        $this->data['gudang'] = $this->Rak_model->get_rak_raw();
 
-        $data['divisi'] = $this->Divisi_model->get_divisi_no_rak($this->input->post('value'));
-        $data['gudang'] = $this->Rak_model->get_rak($this->input->post('value'));
-
-        $pages = $this->load->view('dashboard/rak/add', $data, true);
-
-        echo json_encode(['body' => $pages]);
+        $this->data['sidebar'] = $this->load->view('components/sidebar', array('active' => 'rak'), true);
+        $this->data['body'] = $this->load->view('dashboard/rak/add', $this->data, true);
+        $this->load->view('dashboard/index', $this->data);
     }
 
     public function add_rak_form_get_list()
@@ -106,7 +104,6 @@ class Rak extends CI_Controller {
         // die(var_dump($this->input->post()));
 
         $id_divisi = $this->input->post('id_divisi');
-        $id_cabang = $this->input->post('id_cabang');
         $jumlah_rak = count($this->input->post('rak_milik'));
         
         $rak_milik = "";
@@ -124,7 +121,6 @@ class Rak extends CI_Controller {
 
         $data_post = array(
             'id_divisi' => $id_divisi,
-            'id_cabang' => $id_cabang,
             'jumlah_rak' => $jumlah_rak,
             'rak_milik' => $rak_milik
         );

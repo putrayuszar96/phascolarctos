@@ -5,27 +5,9 @@
             <li class="breadcrumb-item active"><?= $meta['name'] ;?></li>
         </ol>
 
-        <div class="row">
-            <div class="col-xl-12">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        Rak
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12">
-                                <label for="kantor-cabang">Pilih Kantor Cabang:</label>
-                                <select class="form-control" id="show-kantor-cabang">
-                                    <option value="">--- Pilih kantor cabang yang ingin ditampilkan ---</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <input type="hidden" id="divisi-user" value="<?= $_SESSION['divisi'] ;?>" />
 
-        <div class="row d-none" id="tampilan-rak">
+        <div class="row" id="tampilan-rak">
             <div class="col-xl-12">
                 <div class="card mb-4">
                     <div class="card-header">
@@ -34,7 +16,7 @@
                                 Data Rak
                             </div>
                             <div class="col-6">
-                                <button id="btn-tambah-rak" class="btn btn-primary btn-sm float-right">Tambah Rak</button>
+                                <a href="<?=base_url();?>rak/add_form"><button id="btn-tambah-rak" class="btn btn-primary btn-sm float-right">Tambah Rak</button></a>
                             </div>
                         </div>
                     </div>

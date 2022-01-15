@@ -2,120 +2,8 @@ var cabang_terpilih = null;
 var label_cabang_terpilih = null;
 
 $(document).ready(function () {
-    getCabang();
+    getRak();
 });
-
-$('#show-kantor-cabang').on('change', function() {
-    cabang_terpilih = $(this).val();
-    label_cabang_terpilih = $('option:selected', this).data('label')
-
-    getRak(cabang_terpilih);
-})
-
-$(document).on('click', '#btn-tambah-rak', function () {
-    $('main').loading();
-    $.ajax({
-        type: 'POST',
-        url: 'rak/add_rak_form',
-        dataType: 'json',
-        data: {
-            'value': cabang_terpilih,
-            'label': label_cabang_terpilih
-        },
-        success: function (response) {
-            $('main').after(response.body);
-            $('main').loading('stop');
-            $('.modal').modal({
-                'show': true,
-                'backdrop': 'static',
-                'keyboard': false
-            });
-        }
-    })
-})
-
-$(document).on('click', '#cancel-form-rak', function () {
-    $('#tambah-pemilik').modal('hide');
-    $('#tambah-pemilik, .modal-backdrop').remove();
-    $('#gudang').val('null').change();
-    $('#daftar-rak-container').empty();
-})
-
-$(document).on('click', '#submit-form-rak', function () {
-    $('#tambah-pemilik').loading();
-
-    let id_cabang = $('#form-kantor-cabang-hidden').val();
-    let id_divisi = $('#divisi').val()
-    let rak_milik = []
-    $('input[type=checkbox]:checked').each(function () {
-        rak_milik.push($(this).val());
-    })
-
-    $.ajax({
-        type: 'POST',
-        url: 'rak/add_rak_milik_process',
-        dataType: 'json',
-        data: {
-            id_cabang: id_cabang,
-            id_divisi: id_divisi,
-            rak_milik: rak_milik
-        },
-        success: function (response) {
-            if(response.status == 'ok'){
-                setTimeout(function () {
-                $('#tambah-pemilik').modal('hide');
-                $('#tambah-pemilik, .modal-backdrop').remove();
-                $('#tambah-pemilik').loading('stop');
-                
-                $('#dataTable').DataTable().clear();
-                $('#dataTable').DataTable().destroy();
-
-                getRak(id_cabang)
-            }, 1000)
-            }else{
-                $('#form-loading').addClass('d-none');
-                $('#form-failed').removeClass('d-none');
-
-                $('#tambah-pemilik').loading('stop');
-            }
-        }
-    })
-})
-
-$(document).on('change', '#gudang', function () {
-    $('#tambah-pemilik').loading();
-
-    let id_rak = $(this).val();
-
-    $.ajax({
-        type: 'POST',
-        url: 'rak/add_rak_form_get_list',
-        dataType: 'json',
-        data: {
-            id_rak: id_rak,
-        },
-        success: function (response) {
-            if(response.status == 'ok'){
-                $('#daftar-rak-container').empty()
-                response.list.forEach(element => {
-                    let html = ''
-                    let value = element.split(".")
-
-                    html += `
-                        <input type="checkbox" id="list-${value[0]}-${value[1]}" name="list[]" value="${element}" />
-                        <label for="list-${value[0]}-${value[1]}">${element}</label>
-                    `
-
-                    $('#daftar-rak-container').append(html)
-                });
-            }else{
-                console.log(response.status)
-            }
-
-            $('#tambah-pemilik').loading('stop');
-        }
-    })
-})
 
 function getCabang()
 {
@@ -142,17 +30,15 @@ function getCabang()
 
 function getRak(cabang)
 {
-    console.log(cabang)
+    var divisi = $('#divisi-user').val();
+
     $('#dataTable').DataTable({
         "processing": true,
         "serverSide": false,
         "order": false,
         'ajax': {
             'type': 'POST',
-            'url': 'rak/list',
-            'data': function(d){
-                d.cabang = cabang
-            },
+            'url': baseUrl+'/rak/list',
             'dataSrc': function(json) {
                 if (json != null) {
                     if (json.status == 'ok') {
@@ -213,19 +99,18 @@ function getRak(cabang)
                 'data': 'action',
                 'title': 'Action',
                 'render': function(data, type, row, meta) {
-                    var output = `<button type="button" id="update_pemilik" data-id="${data.id_rak}" class="btn btn-link text-success btn-sm d-block"><i class="fa fa-edit"></i> Edit</button>`
-                    output += `<button type="button" id="delete_pemilik" data-id="${data.id_rak}" class="btn btn-link text-danger btn-sm d-block"><i class="fa fa-trash"></i> Hapus</button>`;
+                    if(divisi == 'ADM'){
+                        var output = `<button type="button" id="update_pemilik" data-id="${data.id_rak}" class="btn btn-link text-success btn-sm d-block"><i class="fa fa-edit"></i> Edit</button>`
+                        output += `<button type="button" id="delete_pemilik" data-id="${data.id_rak}" class="btn btn-link text-danger btn-sm d-block"><i class="fa fa-trash"></i> Hapus</button>`;
+                    }else{
+                        var output = '<small><i>No action allowed</i></small>'
+                    }
                     
                     return output;
                 }
             }
         ]
     });
-
-    var tampil_rak = $('#tampilan-rak').hasClass('d-none');
-    if(tampil_rak == true){
-        $('#tampilan-rak').removeClass('d-none');
-    }
 }
 
 $(document).on('click', '#delete_pemilik', function () {

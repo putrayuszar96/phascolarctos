@@ -21,13 +21,11 @@ class Rak_model extends CI_Model
         return $this->db->get_where('rak', array('id_rak' => $id))->row_array();
     }
 
-    public function get_rak_milik($cabang)
+    public function get_rak_milik()
     {
-        $this->db->select('kepemilikan.*, divisi.nama as nama_divisi, kantor_cabang.nama as nama_cabang');
+        $this->db->select('kepemilikan.*, divisi.nama as nama_divisi');
         $this->db->from('kepemilikan');
-        $this->db->join('kantor_cabang', 'kantor_cabang.id_cabang = kepemilikan.id_cabang');
         $this->db->join('divisi', 'divisi.id_divisi = kepemilikan.id_divisi');
-        $this->db->where('kepemilikan.id_cabang', $cabang);
 
         return $this->db->get()->result_array();
     }
