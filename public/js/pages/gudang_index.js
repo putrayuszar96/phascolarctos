@@ -5,113 +5,6 @@ $(document).ready(function () {
     getGudang();
 });
 
-$(document).on('click', '#btn-tambah-gudang', function () {
-    $('main').loading();
-    $.ajax({
-        type: 'POST',
-        url: 'gudang/add_gudang_form',
-        dataType: 'json',
-        data: {
-            'value': cabang_terpilih,
-            'label': label_cabang_terpilih
-        },
-        success: function (response) {
-            $('main').after(response.body);
-            $('main').loading('stop');
-            $('.modal').modal({
-                'show': true,
-                'backdrop': 'static',
-                'keyboard': false
-            });
-        }
-    })
-})
-
-$(document).on('click', '#cancel-form-gudang', function () {
-    $('#tambah-gudang').modal('hide');
-    $('#tambah-gudang, .modal-backdrop').remove();
-})
-
-$(document).on('click', '#check-kode-gudang', function () {
-    console.log('hello')
-    let kode_gudang = $('#kode-gudang').val();
-
-    $.ajax({
-        type: 'POST',
-        url: 'gudang/check_kode_gudang_process',
-        dataType: 'json',
-        data: {
-            kode_gudang: kode_gudang
-        },
-        success: function (response) {
-            if(response.status == 'ok'){
-                $('#form-check-kode-gudang').val('1');
-                $('#status-check-kode-gudang').text('Kode dapat digunakan!')
-            }else{
-                $('#status-check-kode-gudang').text('Kode telah digunakan! Mohon gunakan kode yang lain!')
-            }
-        }
-    })
-})
-
-$(document).on('click', '#submit-form-gudang', function () {
-    $('#tambah-gudang').loading();
-
-    let id_cabang = $('#form-kantor-cabang-hidden').val()
-    let id_terakhir = $('#form-id-gudang-terakhir').val()
-    let nama_gudang = $('#nama-gudang').val()
-    let jumlah_rak = $('#jumlah-rak').val()
-    let level_rak = $('#level-rak').val()
-    let kode_gudang = $('#kode-gudang').val()
-    let status_cek_kode_gudang = $('#form-check-kode-gudang').val()
-
-    if(status_cek_kode_gudang == 0){
-        $('#form-loading').addClass('d-none');
-        $('#form-failed-check').removeClass('d-none');
-
-        $('#tambah-gudang').loading('stop');
-
-        setTimeout(function(){
-            $('#form-failed-check').addClass('d-none');
-        }, 2000)
-    }else{
-        $.ajax({
-            type: 'POST',
-            url: 'gudang/add_gudang_process',
-            dataType: 'json',
-            data: {
-                id_cabang: id_cabang,
-                id_terakhir: id_terakhir,
-                nama_gudang: nama_gudang,
-                jumlah_rak: jumlah_rak,
-                level_rak: level_rak,
-                kode_gudang: kode_gudang
-            },
-            success: function (response) {
-                if(response.status == 'ok'){
-                    $('#form-loading').addClass('d-none');
-                    $('#form-success').removeClass('d-none');
-    
-                    setTimeout(function () {
-                        $('#tambah-gudang').modal('hide');
-                        $('#tambah-gudang, .modal-backdrop').remove();
-                        
-                        $('#dataTable').DataTable().clear();
-                        $('#dataTable').DataTable().destroy();
-                        getGudang(id_cabang)
-                    }, 1000)
-                }else{
-                    $('#form-loading').addClass('d-none');
-                    $('#form-failed').removeClass('d-none');
-                }
-
-                $('#tambah-gudang').loading('stop');
-            }
-        })
-    }
-})
-
-
 function getGudang()
 {
     var divisi = $('#divisi-user').val();
@@ -122,7 +15,7 @@ function getGudang()
         "order": false,
         'ajax': {
             'type': 'POST',
-            'url': 'gudang/list',
+            'url': baseUrl+'/gudang/list',
             'dataSrc': function(json) {
                 if (json != null) {
                     if (json.status == 'ok') {

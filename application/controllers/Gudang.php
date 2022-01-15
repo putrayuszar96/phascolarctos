@@ -69,29 +69,38 @@ class Gudang extends CI_Controller {
 
     public function add_gudang_form()
     {
-        $data = array();
-
-        $data = array(
-            'value' => $this->input->post('value'),
-            'label' => $this->input->post('label'),
-        );
-
-        $this->load->model('Rak_model');
-
-        $get_id = $this->Rak_model->ambil_id_terakhir($this->input->post('value'));
-
-        if($get_id != null){
-            $id_terakhir = $get_id['id_rak'];
-            $id_terakhir = substr($id_terakhir, -1);
-        }else{
-            $id_terakhir = 0;
-        }
         
-        $data['id_terakhir'] = $id_terakhir;
+        $this->data['meta'] = [
+            'title' => 'Gudang - ARIP System',
+            'id_page' => 'gudang_add',
+            'name' => 'Tambah Gudang'
+        ];
+        $this->data['sidebar'] = $this->load->view('components/sidebar', array('active' => 'gudang'), true);
+        $this->data['body'] = $this->load->view('dashboard/gudang/add', $this->data, true);
+        $this->load->view('dashboard/index', $this->data);
+        // $data = array();
 
-        $pages = $this->load->view('dashboard/gudang/add', $data, true);
+        // $data = array(
+        //     'value' => $this->input->post('value'),
+        //     'label' => $this->input->post('label'),
+        // );
 
-        echo json_encode(['body' => $pages]);
+        // $this->load->model('Rak_model');
+
+        // $get_id = $this->Rak_model->ambil_id_terakhir($this->input->post('value'));
+
+        // if($get_id != null){
+        //     $id_terakhir = $get_id['id_rak'];
+        //     $id_terakhir = substr($id_terakhir, -1);
+        // }else{
+        //     $id_terakhir = 0;
+        // }
+        
+        // $data['id_terakhir'] = $id_terakhir;
+
+        // $pages = $this->load->view('dashboard/gudang/add', $data, true);
+
+        // echo json_encode(['body' => $pages]);
     }
 
     public function add_gudang_process()

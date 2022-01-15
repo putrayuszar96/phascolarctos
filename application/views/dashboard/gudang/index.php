@@ -17,7 +17,7 @@
                             </div>
                             <?php if($_SESSION['divisi'] == 'ADM'):?>
                             <div class="col-6">
-                                <button id="btn-tambah-gudang" class="btn btn-primary btn-sm float-right">Tambah Gudang</button>
+                                <a href="<?=base_url();?>gudang/add_gudang_form"><button id="btn-tambah-gudang" class="btn btn-primary btn-sm float-right">Tambah Gudang</button></a>
                             </div>
                             <?php endif; ?>
                         </div>

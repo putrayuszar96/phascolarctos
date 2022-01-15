@@ -7,8 +7,8 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title><?= $meta['title'] ;?></title>
-        <link href="public/css/style.css" rel="stylesheet" />
-        <link href="public/css/arip.css" rel="stylesheet" />
+        <link href="<?= base_url();?>public/css/style.css" rel="stylesheet" />
+        <link href="<?= base_url();?>public/css/arip.css" rel="stylesheet" />
         <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous" />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-easy-loading@1.3.0/dist/jquery.loading.min.css">
@@ -46,7 +46,7 @@
         <?php foreach($scripts as $script):?>
         <script src="<?=$script;?>" crossorigin="anonymous"></script>
         <?php endforeach;?>
-        <script src="public/js/index.js"></script>
-        <script src="public/js/pages/<?=$meta['id_page'];?>.js"></script>
+        <script src="<?= base_url();?>public/js/index.js"></script>
+        <script src="<?= base_url();?>public/js/pages/<?=$meta['id_page'];?>.js"></script>
     </body>
 </html>
