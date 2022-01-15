@@ -7,17 +7,12 @@ class Divisi_model extends CI_Model
         return $this->db->get('divisi')->result_array();
     }
 
-    public function get_divisi($cabang = NULL)
+    public function get_divisi()
     {
-        $this->db->select('divisi.*, count(users.id) as jumlah_pegawai, kantor_cabang.nama as nama_cabang');
+        $this->db->select('divisi.*, count(users.id) as jumlah_pegawai');
         $this->db->from('divisi');
         $this->db->join('users', 'users.divisi = divisi.id_divisi', 'left');
-        $this->db->join('kantor_cabang', 'kantor_cabang.id_cabang = divisi.id_cabang');
         $this->db->group_by('divisi.id_divisi');
-
-        if($cabang != null){
-            $this->db->where('divisi.id_cabang', $cabang);   
-        }
 
         return $this->db->get()->result_array();
     }

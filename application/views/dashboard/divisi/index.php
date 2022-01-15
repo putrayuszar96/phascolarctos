@@ -5,27 +5,9 @@
             <li class="breadcrumb-item active"><?= $meta['name'] ;?></li>
         </ol>
 
-        <div class="row">
-            <div class="col-xl-12">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        Cabang
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12">
-                                <label for="kantor-cabang">Pilih Kantor Cabang:</label>
-                                <select class="form-control" id="show-kantor-cabang">
-                                    <option value="">--- Pilih kantor cabang yang ingin ditampilkan ---</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <input type="hidden" id="divisi-user" value="<?= $_SESSION['divisi'] ;?>" />
 
-        <div class="row d-none" id="tampilan-divisi">
+        <div class="row" id="tampilan-divisi">
             <div class="col-xl-12">
                 <div class="card mb-4">
                     <div class="card-header">
@@ -46,7 +28,6 @@
                                         <thead>
                                             <tr>
                                                 <th>Nama Divisi</th>
-                                                <th>Kantor Cabang</th>
                                                 <th>Jumlah Pegawai</th>
                                                 <th>Jumlah Rak Milik</th>
                                                 <th>Action</th>
@@ -56,7 +37,6 @@
                                         <tfoot>
                                             <tr>
                                                 <th>Nama Divisi</th>
-                                                <th>Kantor Cabang</th>
                                                 <th>Jumlah Pegawai</th>
                                                 <th>Jumlah Rak Milik</th>
                                                 <th>Action</th>

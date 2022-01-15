@@ -2,15 +2,8 @@ var cabang_terpilih = null;
 var label_cabang_terpilih = null;
 
 $(document).ready(function () {
-    getCabang();
+    getDivisi();
 });
-
-$('#show-kantor-cabang').on('change', function() {
-    cabang_terpilih = $(this).val();
-    label_cabang_terpilih = $('option:selected', this).data('label')
-
-    getDivisi(cabang_terpilih);
-})
 
 $(document).on('click', '#btn-tambah-divisi', function () {
     $('main').loading();
@@ -52,7 +45,6 @@ $(document).on('click', '#submit-form-divisi', function () {
         dataType: 'json',
         data: {
             nama: nama,
-            id_terakhir: id_terakhir,
             id_cabang: id_cabang
         },
         success: function (response) {
@@ -79,29 +71,6 @@ $(document).on('click', '#submit-form-divisi', function () {
     })
 })
 
-function getCabang()
-{
-    $.ajax({
-        type: 'POST',
-        url: 'cabang/list',
-        dataType: 'json',
-        success: function (response) {
-            if(response.status == 'ok'){
-                let data = response.data;
-                let option = ''
-
-                data.forEach(cabang => {
-                    option += '<option value="'+cabang.action.id_cabang+'" data-label="'+cabang.nama+'">'+cabang.nama+'</option>';
-                });
-
-                $('#show-kantor-cabang').append(option);
-            }else{
-                alert('Tidak ada cabang yang ditemukan! Harap menambahkan cabang terlebih dahulu!')
-            }
-        }
-    })
-}
-
 function getDivisi(cabang)
 {
     console.log(cabang)
@@ -112,9 +81,6 @@ function getDivisi(cabang)
         'ajax': {
             'type': 'POST',
             'url': 'divisi/list',
-            'data': function(d){
-                d.cabang = cabang
-            },
             'dataSrc': function(json) {
                 if (json != null) {
                     if (json.status == 'ok') {
@@ -149,8 +115,8 @@ function getDivisi(cabang)
             },
             {
                 'targets': 1,
-                'data': 'nama_cabang',
-                'title': 'Kantor Cabang',
+                'data': 'jumlah_pegawai',
+                'title': 'Jumlah Pegawai',
                 'render': function(data, type, row, meta) {
                     return (data != null && data != 'null' && data != '') ? data : '-';
                 }
@@ -158,7 +124,7 @@ function getDivisi(cabang)
             {
                 'targets': 2,
                 'data': 'jumlah_pegawai',
-                'title': 'Jumlah Pegawai',
+                'title': 'Jumlah Rak',
                 'render': function(data, type, row, meta) {
                     return (data != null && data != 'null' && data != '') ? data + " orang" : '-';
                 }
@@ -176,11 +142,6 @@ function getDivisi(cabang)
             }
         ]
     });
-
-    var tampil_divisi = $('#tampilan-divisi').hasClass('d-none');
-    if(tampil_divisi == true){
-        $('#tampilan-divisi').removeClass('d-none');
-    }
 }
 
 $(document).on('click', '#delete_divisi', function () {

@@ -49,7 +49,6 @@ class Divisi extends CI_Controller {
             $return = array(
                 'nama' => $rr['nama'],
                 'jumlah_pegawai' => $rr['jumlah_pegawai'],
-                'nama_cabang' => $rr['nama_cabang'],
                 'action' => [
                     'id_ai_divisi' => $rr['id_ai_divisi'],
                     'id_divisi' => $rr['id_divisi']
@@ -93,10 +92,15 @@ class Divisi extends CI_Controller {
 
     public function add_divisi_process()
     {
+        $this->load->model('Divisi_model');
+
         $id_cabang = $this->input->post('id_cabang');
         $nama_divisi = $this->input->Post('nama');
 
-        $id_divisi = sprintf("%03d", ($this->input->post('id_terakhir')+1));
+        $jumlah_divisi = $this->Divisi_model->get_divisi_raw();
+        $jumlah_divisi = count($jumlah_divisi);
+
+        $id_divisi = sprintf("%03d", ($jumlah_divisi+1));
         $id_divisi = $id_cabang . "DIV" . $id_divisi;
 
         $data_post = array(
@@ -104,8 +108,6 @@ class Divisi extends CI_Controller {
             'id_divisi' => $id_divisi,
             'nama' => $nama_divisi
         );
-
-        $this->load->model('Divisi_model');
         
         $do_register = $this->Divisi_model->do_add($data_post);
 
