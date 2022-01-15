@@ -2,15 +2,8 @@ var cabang_terpilih = null;
 var label_cabang_terpilih = null;
 
 $(document).ready(function () {
-    getCabang();
+    getGudang();
 });
-
-$('#show-kantor-cabang').on('change', function() {
-    cabang_terpilih = $(this).val();
-    label_cabang_terpilih = $('option:selected', this).data('label')
-
-    getGudang(cabang_terpilih);
-})
 
 $(document).on('click', '#btn-tambah-gudang', function () {
     $('main').loading();
@@ -34,9 +27,31 @@ $(document).on('click', '#btn-tambah-gudang', function () {
     })
 })
 
-$(document).on('click', '#cancel-form-divisi', function () {
+$(document).on('click', '#cancel-form-gudang', function () {
     $('#tambah-gudang').modal('hide');
     $('#tambah-gudang, .modal-backdrop').remove();
+})
+
+$(document).on('click', '#check-kode-gudang', function () {
+    console.log('hello')
+    let kode_gudang = $('#kode-gudang').val();
+
+    $.ajax({
+        type: 'POST',
+        url: 'gudang/check_kode_gudang_process',
+        dataType: 'json',
+        data: {
+            kode_gudang: kode_gudang
+        },
+        success: function (response) {
+            if(response.status == 'ok'){
+                $('#form-check-kode-gudang').val('1');
+                $('#status-check-kode-gudang').text('Kode dapat digunakan!')
+            }else{
+                $('#status-check-kode-gudang').text('Kode telah digunakan! Mohon gunakan kode yang lain!')
+            }
+        }
+    })
 })
 
 $(document).on('click', '#submit-form-gudang', function () {
@@ -47,66 +62,60 @@ $(document).on('click', '#submit-form-gudang', function () {
     let nama_gudang = $('#nama-gudang').val()
     let jumlah_rak = $('#jumlah-rak').val()
     let level_rak = $('#level-rak').val()
+    let kode_gudang = $('#kode-gudang').val()
+    let status_cek_kode_gudang = $('#form-check-kode-gudang').val()
 
-    $.ajax({
-        type: 'POST',
-        url: 'gudang/add_gudang_process',
-        dataType: 'json',
-        data: {
-            id_cabang: id_cabang,
-            id_terakhir: id_terakhir,
-            nama_gudang: nama_gudang,
-            jumlah_rak: jumlah_rak,
-            level_rak: level_rak
-        },
-        success: function (response) {
-            if(response.status == 'ok'){
-                $('#form-loading').addClass('d-none');
-                $('#form-success').removeClass('d-none');
+    if(status_cek_kode_gudang == 0){
+        $('#form-loading').addClass('d-none');
+        $('#form-failed-check').removeClass('d-none');
 
-                setTimeout(function () {
-                    $('#tambah-gudang').modal('hide');
-                    $('#tambah-gudang, .modal-backdrop').remove();
-                    
-                    $('#dataTable').DataTable().clear();
-                    $('#dataTable').DataTable().destroy();
-                    getGudang(id_cabang)
-                }, 1000)
-            }else{
-                $('#form-loading').addClass('d-none');
-                $('#form-failed').removeClass('d-none');
+        $('#tambah-gudang').loading('stop');
+
+        setTimeout(function(){
+            $('#form-failed-check').addClass('d-none');
+        }, 2000)
+    }else{
+        $.ajax({
+            type: 'POST',
+            url: 'gudang/add_gudang_process',
+            dataType: 'json',
+            data: {
+                id_cabang: id_cabang,
+                id_terakhir: id_terakhir,
+                nama_gudang: nama_gudang,
+                jumlah_rak: jumlah_rak,
+                level_rak: level_rak,
+                kode_gudang: kode_gudang
+            },
+            success: function (response) {
+                if(response.status == 'ok'){
+                    $('#form-loading').addClass('d-none');
+                    $('#form-success').removeClass('d-none');
+    
+                    setTimeout(function () {
+                        $('#tambah-gudang').modal('hide');
+                        $('#tambah-gudang, .modal-backdrop').remove();
+                        
+                        $('#dataTable').DataTable().clear();
+                        $('#dataTable').DataTable().destroy();
+                        getGudang(id_cabang)
+                    }, 1000)
+                }else{
+                    $('#form-loading').addClass('d-none');
+                    $('#form-failed').removeClass('d-none');
+                }
 
                 $('#tambah-gudang').loading('stop');
             }
-        }
-    })
+        })
+    }
 })
 
-function getCabang()
+
+function getGudang()
 {
-    $.ajax({
-        type: 'POST',
-        url: 'cabang/list',
-        dataType: 'json',
-        success: function (response) {
-            if(response.status == 'ok'){
-                let data = response.data;
-                let option = ''
-
-                data.forEach(cabang => {
-                    option += '<option value="'+cabang.action.id_cabang+'" data-label="'+cabang.nama+'">'+cabang.nama+'</option>';
-                });
-
-                $('#show-kantor-cabang').append(option);
-            }else{
-                alert('Tidak ada cabang yang ditemukan! Harap menambahkan cabang terlebih dahulu!')
-            }
-        }
-    })
-}
-
-function getGudang(cabang)
-{
+    var divisi = $('#divisi-user').val();
+    
     $('#dataTable').DataTable({
         "processing": true,
         "serverSide": false,
@@ -114,9 +123,6 @@ function getGudang(cabang)
         'ajax': {
             'type': 'POST',
             'url': 'gudang/list',
-            'data': function(d){
-                d.cabang = cabang
-            },
             'dataSrc': function(json) {
                 if (json != null) {
                     if (json.status == 'ok') {
@@ -134,7 +140,7 @@ function getGudang(cabang)
         },
         'sAjaxDataProp': '',
         'columnDefs': [{
-                targets: [0, 1, 2, 3, 4],
+                targets: [0, 1, 2, 3, 4, 5],
                 visible: true
             },
             {
@@ -151,6 +157,14 @@ function getGudang(cabang)
             },
             {
                 'targets': 1,
+                'data': 'kode_gudang',
+                'title': 'Kode Gudang',
+                'render': function(data, type, row, meta) {
+                    return (data != null && data != 'null' && data != '') ? data : '-';
+                }
+            },
+            {
+                'targets': 2,
                 'data': 'jumlah',
                 'title': 'Jumlah Rak',
                 'render': function(data, type, row, meta) {
@@ -158,7 +172,7 @@ function getGudang(cabang)
                 }
             },
             {
-                'targets': 2,
+                'targets': 3,
                 'data': 'jumlah',
                 'title': 'Jumlah Sublevel',
                 'render': function(data, type, row, meta) {
@@ -166,7 +180,7 @@ function getGudang(cabang)
                 }
             },
             {
-                'targets': 3,
+                'targets': 4,
                 'data': 'jumlah',
                 'title': 'Total Rak',
                 'render': function(data, type, row, meta) {
@@ -178,12 +192,16 @@ function getGudang(cabang)
                 }
             },
             {
-                'targets': 4,
+                'targets': 5,
                 'data': 'action',
                 'title': 'Action',
                 'render': function(data, type, row, meta) {
-                    var output = `<button type="button" id="update_gudang" data-id="${data.id_rak}" class="btn btn-link text-success btn-sm d-block"><i class="fa fa-edit"></i> Edit</button>`
-                    output += `<button type="button" id="delete_gudang" data-id="${data.id_rak}" class="btn btn-link text-danger btn-sm d-block"><i class="fa fa-trash"></i> Hapus</button>`;
+                    if(divisi == 'ADM'){
+                        var output = `<button type="button" id="update_gudang" data-id="${data.id_rak}" class="btn btn-link text-success btn-sm d-block"><i class="fa fa-edit"></i> Edit</button>`
+                        output += `<button type="button" id="delete_gudang" data-id="${data.id_rak}" class="btn btn-link text-danger btn-sm d-block"><i class="fa fa-trash"></i> Hapus</button>`;
+                    }else{
+                        var output = '<small><i>No action allowed</i></small>'
+                    }
                     
                     return output;
                 }

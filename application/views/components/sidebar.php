@@ -6,26 +6,26 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Dashboard
                 </a> -->
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#menu-kantor" aria-expanded="false" aria-controls="collapseLayouts">
-                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>Kantor Cabang <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                <a class="nav-link" href="gudang">
+                    <div class="sb-nav-link-icon"><i class="fas fa-building"></i></div>
+                    Gudang
                 </a>
-                <div class="collapse" id="menu-kantor" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                    <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="cabang">Cabang</a>
-                        <a class="nav-link" href="divisi">Divisi</a>
-                        <a class="nav-link" href="user">Pegawai</a>
-                    </nav>
-                </div>
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#menu-gudang" aria-expanded="false" aria-controls="collapseLayouts">
-                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>Gudang <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                <a class="nav-link" href="rak">
+                    <div class="sb-nav-link-icon"><i class="fas fa-users-cog"></i></div>
+                    Rak Milik
                 </a>
-                <div class="collapse" id="menu-gudang" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                    <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="gudang">Gudang</a>
-                        <a class="nav-link" href="rak">Rak Milik</a>
-                        <a class="nav-link" href="barang">Barang</a>
-                    </nav>
-                </div>
+                <a class="nav-link" href="berkas">
+                    <div class="sb-nav-link-icon"><i class="fas fa-copy"></i></div>
+                    Berkas
+                </a>
+                <a class="nav-link" href="divisi">
+                    <div class="sb-nav-link-icon"><i class="fas fa-house-user"></i></div>
+                    Divisi
+                </a>
+                <a class="nav-link" href="user">
+                    <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                    Pegawai
+                </a>
             </div>
         </div>
         <div class="sb-sidenav-footer">

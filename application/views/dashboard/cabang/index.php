@@ -13,9 +13,9 @@
                             <div class="col-6">
                                 Data Cabang
                             </div>
-                            <div class="col-6">
+                            <!-- <div class="col-6">
                                 <button id="btn-tambah-cabang" class="btn btn-primary btn-sm float-right">Tambah Cabang</button>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <div class="card-body">

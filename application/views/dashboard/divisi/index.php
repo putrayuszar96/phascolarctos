@@ -48,6 +48,7 @@
                                                 <th>Nama Divisi</th>
                                                 <th>Kantor Cabang</th>
                                                 <th>Jumlah Pegawai</th>
+                                                <th>Jumlah Rak Milik</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -57,6 +58,7 @@
                                                 <th>Nama Divisi</th>
                                                 <th>Kantor Cabang</th>
                                                 <th>Jumlah Pegawai</th>
+                                                <th>Jumlah Rak Milik</th>
                                                 <th>Action</th>
                                             </tr>
                                         </tfoot>

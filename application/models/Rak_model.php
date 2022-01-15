@@ -2,12 +2,16 @@
 
 class Rak_model extends CI_Model
 {
-    public function get_rak($cabang)
+    public function get_rak_raw()
+    {
+        return $this->db->get('rak')->result_array();
+    }
+
+    public function get_rak()
     {
         $this->db->select('rak.*, kantor_cabang.nama as nama_cabang');
         $this->db->from('rak');
         $this->db->join('kantor_cabang', 'kantor_cabang.id_cabang = rak.id_cabang');
-        $this->db->where('rak.id_cabang', $cabang);
 
         return $this->db->get()->result_array();
     }
@@ -31,6 +35,11 @@ class Rak_model extends CI_Model
     public function get_rak_milik_id($id)
     {
         return $this->db->get_where('kepemilikan', array('id_divisi' => $id))->row_array();
+    }
+
+    public function get_check_kode_gudang($kode_gudang)
+    {
+        return $this->db->get_where('rak', array('kode_gudang' => $kode_gudang))->result_array();
     }
 
     public function ambil_id_terakhir($cabang)

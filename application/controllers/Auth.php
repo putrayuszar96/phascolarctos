@@ -12,7 +12,7 @@ class Auth extends CI_Controller {
 	public function index()
 	{
         if(isset($_SESSION['login'])){
-            redirect('Dashboard');
+            redirect('Cabang');
         }
         $this->data['title'] = 'ARIP System';
         $this->load->view('auth/index', $this->data);
@@ -32,6 +32,7 @@ class Auth extends CI_Controller {
                 'login' => true,
                 'id' => $cek_login['data']['id'],
                 'username' => $cek_login['data']['username'],
+                'divisi' => $cek_login['data']['divisi'],
                 'nama_lengkap' => $cek_login['data']['nama_lengkap'],
             ];
 

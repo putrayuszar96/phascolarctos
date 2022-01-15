@@ -40,14 +40,13 @@ class Gudang extends CI_Controller {
     {
         $this->load->model('Rak_model');
 
-        $cabang = $this->input->post('cabang');
-
-        $raw_result = $this->Rak_model->get_rak($cabang);
+        $raw_result = $this->Rak_model->get_rak();
         $return_result = array();
 
         foreach($raw_result as $rr){
             $return = array(
                 'nama_gudang' => $rr['nama'],
+                'kode_gudang' => $rr['kode_gudang'],
                 'jumlah' => [
                     'level' => $rr['jumlah_level'],
                     'sublevel' => $rr['jumlah_sublevel']
@@ -97,8 +96,11 @@ class Gudang extends CI_Controller {
 
     public function add_gudang_process()
     {
-        $id_cabang = $this->input->post('id_cabang');
+        $this->load->model('Rak_model');
+
+        $id_cabang = 'CAB001';
         $nama_gudang = $this->input->post('nama_gudang');
+        $kode_gudang = $this->input->post('kode_gudang');
 
         $jumlah_level = $this->input->post('jumlah_rak');
         $jumlah_sublevel = $this->input->post('level_rak');
@@ -117,19 +119,21 @@ class Gudang extends CI_Controller {
             }
         }
 
-        $id_rak = sprintf("%03d", ($this->input->post('id_terakhir')+1));
+        $rak = $this->Rak_model->get_rak_raw();
+        $jumlah_rak = count($rak);
+
+        $id_rak = sprintf("%03d", ($jumlah_rak+1));
         $id_rak = $id_cabang . "RAK" . $id_rak;
 
         $data_post = array(
             'id_rak' => $id_rak,
             'id_cabang' => $id_cabang,
             'nama' => $nama_gudang,
+            'kode_gudang' => $kode_gudang,
             'jumlah_level' => $jumlah_level,
             'jumlah_sublevel' => $jumlah_sublevel,
             'list' => $list
         );
-
-        $this->load->model('Rak_model');
         
         $do_add_rak = $this->Rak_model->do_add_rak($data_post);
 
@@ -137,6 +141,21 @@ class Gudang extends CI_Controller {
             echo json_encode(['status' => 'ok']);
         }else{
             echo json_encode(['status' => 'error']);
+        }
+    }
+
+    public function check_kode_gudang_process()
+    {
+        $this->load->model('Rak_model');
+
+        $kode_gudang = $this->input->post('kode_gudang');
+        
+        $result = $this->Rak_model->get_check_kode_gudang($kode_gudang);
+
+        if(count($result) > 0){
+            echo json_encode(['status' => 'false']);
+        }else{
+            echo json_encode(['status' => 'ok']);
         }
     }
 
