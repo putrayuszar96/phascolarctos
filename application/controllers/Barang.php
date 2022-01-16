@@ -36,6 +36,35 @@ class Barang extends CI_Controller {
         $this->load->view('dashboard/index', $this->data);
 	}
 
+    public function add()
+    {
+        $this->load->model('Divisi_model');
+        
+        $this->data['meta'] = [
+            'title' => 'Tambah Berkas - ARIP System',
+            'id_page' => 'barang_add',
+            'name' => 'Tambah Berkas'
+        ];
+
+        $this->data['divisi'] = $this->Divisi_model->get_divisi_raw();
+
+        $this->data['sidebar'] = $this->load->view('components/sidebar', array('active' => 'barang'), true);
+        $this->data['body'] = $this->load->view('dashboard/barang/add', $this->data, true);
+        $this->load->view('dashboard/index', $this->data);
+    }
+
+    public function edit()
+    {
+        $this->data['meta'] = [
+            'title' => 'Ubah Berkas - ARIP System',
+            'id_page' => 'barang_edit',
+            'name' => 'Ubah Berkas'
+        ];
+        $this->data['sidebar'] = $this->load->view('components/sidebar', array('active' => 'barang'), true);
+        $this->data['body'] = $this->load->view('dashboard/barang/edit', $this->data, true);
+        $this->load->view('dashboard/index', $this->data);
+    }
+
     public function list()
     {
         $this->load->model('Barang_model');
