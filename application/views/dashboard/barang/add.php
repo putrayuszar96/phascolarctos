@@ -6,7 +6,6 @@
         </ol>
 
         <div class="row" id="tambah-barang">
-            <input type="hidden" class="form-control d-none" id="form-kantor-cabang-hidden" value="CAB001">
             <input type="hidden" id="uploader" value="1" />
             <input type="hidden" id="status-pinjam" value="1" />
 

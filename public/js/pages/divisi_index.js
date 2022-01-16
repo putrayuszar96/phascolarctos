@@ -1,76 +1,8 @@
-var cabang_terpilih = null;
-var label_cabang_terpilih = null;
-
 $(document).ready(function () {
     getDivisi();
 });
 
-$(document).on('click', '#btn-tambah-divisi', function () {
-    $('main').loading();
-    $.ajax({
-        type: 'POST',
-        url: 'divisi/add_divisi_form',
-        dataType: 'json',
-        data: {
-            'value': cabang_terpilih,
-            'label': label_cabang_terpilih
-        },
-        success: function (response) {
-            $('main').after(response.body);
-            $('main').loading('stop');
-            $('.modal').modal({
-                'show': true,
-                'backdrop': 'static',
-                'keyboard': false
-            });
-        }
-    })
-})
-
-$(document).on('click', '#cancel-form-divisi', function () {
-    $('#tambah-divisi').modal('hide');
-    $('#tambah-divisi, .modal-backdrop').remove();
-})
-
-$(document).on('click', '#submit-form-divisi', function () {
-    $('#tambah-divisi').loading();
-
-    let nama = $('#nama').val()
-    let id_cabang = $('#form-kantor-cabang-hidden').val()
-
-    $.ajax({
-        type: 'POST',
-        url: 'divisi/add_divisi_process',
-        dataType: 'json',
-        data: {
-            nama: nama,
-            id_cabang: id_cabang
-        },
-        success: function (response) {
-            if(response.status == 'ok'){
-                $('#form-loading').addClass('d-none');
-                $('#form-success').removeClass('d-none');
-                $('#tambah-divisi').loading('stop');
-
-                setTimeout(function () {
-                    $('#tambah-divisi').modal('hide');
-                    $('#tambah-divisi, .modal-backdrop').remove();
-                    
-                    $('#dataTable').DataTable().clear();
-                    $('#dataTable').DataTable().destroy();
-                    getDivisi(id_cabang)
-                }, 1000)
-            }else{
-                $('#form-loading').addClass('d-none');
-                $('#form-failed').removeClass('d-none');
-
-                $('#tambah-divisi').loading('stop');
-            }
-        }
-    })
-})
-
-function getDivisi(cabang)
+function getDivisi()
 {
     var divisi_user = $('#divisi-user').val();
 
@@ -149,7 +81,7 @@ function getDivisi(cabang)
 }
 
 $(document).on('click', '#delete_divisi', function () {
-    var id_cabang = $(this).data('id')
+    var id_divisi = $(this).data('id')
 
     Swal.fire({
         title: 'Anda akan menghapus divisi ini?',
@@ -160,7 +92,7 @@ $(document).on('click', '#delete_divisi', function () {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Ya, hapus divisi!',
         preConfirm: () => {
-            return fetch(`divisi/delete/${id_cabang}`)
+            return fetch(`divisi/delete/${id_divisi}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(response.statusText)
@@ -186,7 +118,7 @@ $(document).on('click', '#delete_divisi', function () {
                     $('#dataTable').DataTable().clear();
                     $('#dataTable').DataTable().destroy();
 
-                    getDivisi(cabang_terpilih)
+                    getDivisi()
                 }
             })
         }else{

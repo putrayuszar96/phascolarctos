@@ -2,7 +2,6 @@ $(document).on('click', '#submit-form-barang', function () {
     $('#tambah-barang').loading();
 
     let nama_barang = $('#nama-barang').val();
-    let id_cabang = $('#form-kantor-cabang-hidden').val();
     let id_divisi = $('#divisi').val()
     let uploader = $('#uploader').val();
     let status_pinjam = $('#status-pinjam').val();
@@ -14,7 +13,6 @@ $(document).on('click', '#submit-form-barang', function () {
         dataType: 'json',
         data: {
             nama_barang: nama_barang,
-            id_cabang: id_cabang,
             id_divisi: id_divisi,
             uploader: uploader,
             status_pinjam: status_pinjam,
@@ -27,17 +25,7 @@ $(document).on('click', '#submit-form-barang', function () {
                 $('#tambah-barang').loading('stop');
 
                 setTimeout(function () {
-                    $('#tambah-barang').modal('hide');
-                    $('#tambah-barang, .modal-backdrop').remove();
-                    
-                    $('#dataTable').DataTable().clear();
-                    $('#dataTable').DataTable().destroy();
-
-                    let filter = {
-                        'cabang': id_cabang
-                    }
-
-                    getBarang(filter)
+                    window.location.replace(baseUrl+'/barang');
                 }, 1000)
             }else{
                 $('#form-loading').addClass('d-none');

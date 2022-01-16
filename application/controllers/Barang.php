@@ -134,7 +134,6 @@ class Barang extends CI_Controller {
         
         $uuid = $this->gen_uuid();
         $nama_barang = $this->input->post('nama_barang');
-        $id_cabang = $this->input->post('id_cabang');
         $id_divisi = $this->input->post('id_divisi');
         $uploader = $this->input->post('uploader');
         $status_pinjam = $this->input->post('status_pinjam');
@@ -143,7 +142,6 @@ class Barang extends CI_Controller {
         $data_post = array(
             'uuid_barang' => $uuid,
             'nama_barang' => $nama_barang,
-            'id_cabang' => $id_cabang,
             'id_divisi' => $id_divisi,
             'uploader' => $uploader,
             'status_pinjam' => $status_pinjam,

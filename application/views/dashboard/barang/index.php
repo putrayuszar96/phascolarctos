@@ -15,11 +15,11 @@
                         <input type="hidden" id="divisi-user" value="<?= $_SESSION['divisi'] ;?>" />
                         <div class="row">
                             <div class="col-6">
-                                <label for="kantor-cabang">Divisi</label>
+                                <label for="filter-divisi">Divisi</label>
                                 <select class="form-control" id="filter-divisi"></select>
                             </div>
                             <div class="col-6">
-                                <label for="kantor-cabang">Lokasi Rak</label>
+                                <label for="filter-lokasi">Lokasi Rak</label>
                                 <select class="form-control" id="filter-lokasi"></select>
                             </div>
                         </div>

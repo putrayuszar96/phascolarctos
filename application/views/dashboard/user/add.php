@@ -13,15 +13,6 @@
                   <div class="alert alert-warning d-none" id="form-loading">Menambahkan...</div>
                 </div>
                 <div class="form-group col-12">
-                    <label for="cabang">Kantor Cabang <small class="text-danger">(required)</small></label>
-                    <select class="form-control" id="cabang">
-                        <option value="">--- Pilih Cabang ---</option>
-                        <?php foreach($cabang as $cab):?>
-                            <option value="<?=$cab['id_cabang'];?>"><?= $cab['nama'];?></option>
-                        <?php endforeach;?>
-                    </select>
-                </div>
-                <div class="form-group col-12">
                     <label for="divisi">Divisi <small class="text-danger">(required)</small></label>
                     <select class="form-control" id="divisi">
                         <option value="">--- Pilih Divisi ---</option>

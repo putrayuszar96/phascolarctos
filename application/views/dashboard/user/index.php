@@ -10,7 +10,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-6">
-                                Daftar Pegawai Cabang
+                                Daftar Pegawai
                             </div>
                             <div class="col-6">
                                 <button id="btn-tambah-pegawai" class="btn btn-sm btn-primary float-right">Tambah Pegawai</button>
@@ -23,7 +23,6 @@
                                 <thead>
                                     <tr>
                                         <th>Nama Lengkap</th>
-                                        <th>Cabang</th>
                                         <th>Divisi</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -33,7 +32,6 @@
                                 <tfoot>
                                     <tr>
                                         <th>Nama Lengkap</th>
-                                        <th>Cabang</th>
                                         <th>Divisi</th>
                                         <th>Status</th>
                                         <th>Action</th>

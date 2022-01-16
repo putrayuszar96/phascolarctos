@@ -141,7 +141,6 @@ class Rak extends CI_Controller {
         $email = $this->input->post('email');
         $username = $this->input->post('username');
         $nama_lengkap = $this->input->post('nama_lengkap');
-        $cabang = $this->input->post('cabang');
         $divisi = $this->input->post('divisi');
         $status = 1;
         $password = 'kcplangsa123';
@@ -150,7 +149,6 @@ class Rak extends CI_Controller {
             'email' => $email,
             'username' => $username,
             'nama_lengkap' => $nama_lengkap,
-            'cabang' => $cabang,
             'divisi' => $divisi,
             'status' => $status,
             'password' => password_hash($password, PASSWORD_BCRYPT)

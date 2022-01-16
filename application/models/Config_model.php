@@ -2,16 +2,7 @@
 
 class Config_model extends CI_Model
 {
-    public function get_cabang($id = null)
-    {
-        if($id != null){
-
-        }else{
-            return $this->db->get('kantor_cabang')->result_array();
-        }
-    }
-
-    public function get_divisi($id = null, $id_cabang = null)
+    public function get_divisi($id = null)
     {
         if($id != null){
 

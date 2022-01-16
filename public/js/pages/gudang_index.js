@@ -1,6 +1,3 @@
-var cabang_terpilih = null;
-var label_cabang_terpilih = null;
-
 $(document).ready(function () {
     getGudang();
 });
@@ -146,7 +143,7 @@ $(document).on('click', '#delete_gudang', function () {
                     $('#dataTable').DataTable().clear();
                     $('#dataTable').DataTable().destroy();
 
-                    getGudang(cabang_terpilih)
+                    getGudang()
                 }
             })
         }else{

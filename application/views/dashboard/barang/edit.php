@@ -16,13 +16,9 @@
                   <div class="alert alert-warning d-none" id="form-loading">Menambahkan...</div>
                 </div>
 
-                <input type="hidden" class="form-control d-none" id="form-kantor-cabang-hidden" value="<?=$value;?>">
                 <input type="hidden" id="uploader" value="1" />
                 <input type="hidden" id="status-pinjam" value="1" />
-                <div class="form-group col-12">
-                    <label for="form-kantor-cabang">Kantor Cabang</label>
-                    <input type="text" class="form-control" id="form-kantor-cabang" placeholder="" value="<?=$label;?>" disabled>
-                </div>
+                
                 <div class="form-group col-12">
                     <label for="divisi">Divisi</label>
                     <select class="form-control" id="divisi">

@@ -1,6 +1,3 @@
-var cabang_terpilih = null;
-var label_cabang_terpilih = null;
-
 $(document).ready(function () {
     getBarang()
 });
@@ -182,14 +179,9 @@ $(document).on('click', '#pinjam_barang', function () {
             })
             .then((result) => {
                 if(result.isConfirmed){
-                    let filter = {
-                        cabang: cabang_terpilih
-                    }
-
-                    $('#dataTable').DataTable().clear();
-                    $('#dataTable').DataTable().destroy();
-
-                    getBarang(filter)
+                    setTimeout(function () {
+                        location.reload()
+                    }, 1000)
                 }
             })
         }else{
@@ -235,14 +227,9 @@ $(document).on('click', '#kembali_barang', function () {
             })
             .then((result) => {
                 if(result.isConfirmed){
-                    let filter = {
-                        cabang: cabang_terpilih
-                    }
-                    
-                    $('#dataTable').DataTable().clear();
-                    $('#dataTable').DataTable().destroy();
-
-                    getBarang(filter)
+                    setTimeout(function() {
+                        location.reload()
+                    }, 1000)
                 }
             })
         }else{
@@ -254,10 +241,7 @@ $(document).on('click', '#kembali_barang', function () {
 })
 
 $(document).on('click', '#delete_barang', function () {
-    var id_cabang = $(this).data('id')
-    let filter = {
-        cabang: cabang_terpilih
-    }
+    var id_barang = $(this).data('id')
 
     Swal.fire({
         title: 'Anda akan menghapus berkas ini?',
@@ -268,7 +252,7 @@ $(document).on('click', '#delete_barang', function () {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Ya, hapus berkas!',
         preConfirm: () => {
-            return fetch(`barang/delete/${id_cabang}`)
+            return fetch(`barang/delete/${id_barang}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error(response.statusText)
@@ -291,10 +275,9 @@ $(document).on('click', '#delete_barang', function () {
             })
             .then((result) => {
                 if(result.isConfirmed){
-                    $('#dataTable').DataTable().clear();
-                    $('#dataTable').DataTable().destroy();
-
-                    getBarang(filter)
+                    setTimeout(function() {
+                        location.reload()
+                    }, 1000)
                 }
             })
         }else{

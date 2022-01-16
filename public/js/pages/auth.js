@@ -19,7 +19,7 @@ $(document).on('click', '#do-login', function () {
                 $('#success').removeClass('d-none');
 
                 setTimeout(function() {
-                    window.location.replace('cabang');
+                    window.location.replace('barang');
                 }, 1000)
             }else{
                 let message = ' (Kesalahan: <span>'+response.data.message+'</span>)'

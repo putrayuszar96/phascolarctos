@@ -83,7 +83,6 @@ class Gudang extends CI_Controller {
     {
         $this->load->model('Rak_model');
 
-        $id_cabang = 'CAB001';
         $nama_gudang = $this->input->post('nama_gudang');
         $kode_gudang = $this->input->post('kode_gudang');
 
@@ -108,11 +107,10 @@ class Gudang extends CI_Controller {
         $jumlah_rak = count($rak);
 
         $id_rak = sprintf("%03d", ($jumlah_rak+1));
-        $id_rak = $id_cabang . "RAK" . $id_rak;
+        $id_rak = "RAK" . $id_rak;
 
         $data_post = array(
             'id_rak' => $id_rak,
-            'id_cabang' => $id_cabang,
             'nama' => $nama_gudang,
             'kode_gudang' => $kode_gudang,
             'jumlah_level' => $jumlah_level,

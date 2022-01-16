@@ -12,7 +12,7 @@ class Auth extends CI_Controller {
 	public function index()
 	{
         if(isset($_SESSION['login'])){
-            redirect('Cabang');
+            redirect('Barang');
         }
         $this->data['title'] = 'ARIP System';
         $this->load->view('auth/index', $this->data);

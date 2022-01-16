@@ -40,9 +40,7 @@ class Divisi extends CI_Controller {
     {
         $this->load->model('Divisi_model');
 
-        $cabang = $this->input->post('cabang');
-
-        $raw_result = $this->Divisi_model->get_divisi($cabang);
+        $raw_result = $this->Divisi_model->get_divisi();
         $return_result = array();
 
         foreach($raw_result as $rr){
@@ -94,17 +92,15 @@ class Divisi extends CI_Controller {
     {
         $this->load->model('Divisi_model');
 
-        $id_cabang = $this->input->post('id_cabang');
         $nama_divisi = $this->input->Post('nama');
 
         $jumlah_divisi = $this->Divisi_model->get_divisi_raw();
         $jumlah_divisi = count($jumlah_divisi);
 
         $id_divisi = sprintf("%03d", ($jumlah_divisi+1));
-        $id_divisi = $id_cabang . "DIV" . $id_divisi;
+        $id_divisi = "DIV" . $id_divisi;
 
         $data_post = array(
-            'id_cabang' => $id_cabang,
             'id_divisi' => $id_divisi,
             'nama' => $nama_divisi
         );

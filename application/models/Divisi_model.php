@@ -17,11 +17,6 @@ class Divisi_model extends CI_Model
         return $this->db->get()->result_array();
     }
 
-    public function ambil_id_terakhir($cabang)
-    {
-        return $this->db->order_by('id_ai_divisi', 'DESC')->get_where('divisi', array('id_cabang' => $cabang), 1)->row_array();
-    }
-
     public function do_add($data_post)
     {
         $query = $this->db->insert('divisi', $data_post);
@@ -33,15 +28,14 @@ class Divisi_model extends CI_Model
         }
     }
 
-    public function get_divisi_no_rak($cabang){
+    public function get_divisi_no_rak(){
         return $this->db->query('SELECT divisi.* FROM divisi NATURAL LEFT JOIN kepemilikan WHERE kepemilikan.id_divisi IS NULL')->result_array();
     }
 
-    public function get_divisi_with_rak($cabang){
+    public function get_divisi_with_rak(){
         $this->db->select('kepemilikan.*, divisi.nama as nama_divisi');
         $this->db->from('kepemilikan');
         $this->db->join('divisi', 'divisi.id_divisi = kepemilikan.id_divisi');
-        $this->db->where('kepemilikan.id_cabang', $cabang);
 
         return $this->db->get()->result_array();
     }

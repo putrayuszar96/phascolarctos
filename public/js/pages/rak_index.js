@@ -1,34 +1,8 @@
-var cabang_terpilih = null;
-var label_cabang_terpilih = null;
-
 $(document).ready(function () {
     getRak();
 });
 
-function getCabang()
-{
-    $.ajax({
-        type: 'POST',
-        url: 'cabang/list',
-        dataType: 'json',
-        success: function (response) {
-            if(response.status == 'ok'){
-                let data = response.data;
-                let option = ''
-
-                data.forEach(cabang => {
-                    option += '<option value="'+cabang.action.id_cabang+'" data-label="'+cabang.nama+'">'+cabang.nama+'</option>';
-                });
-
-                $('#show-kantor-cabang').append(option);
-            }else{
-                alert('Tidak ada cabang yang ditemukan! Harap menambahkan cabang terlebih dahulu!')
-            }
-        }
-    })
-}
-
-function getRak(cabang)
+function getRak()
 {
     var divisi = $('#divisi-user').val();
 
@@ -151,7 +125,7 @@ $(document).on('click', '#delete_pemilik', function () {
                     $('#dataTable').DataTable().clear();
                     $('#dataTable').DataTable().destroy();
 
-                    getRak(cabang_terpilih)
+                    getRak()
                 }
             })
         }else{

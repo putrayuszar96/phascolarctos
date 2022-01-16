@@ -31,7 +31,6 @@ $(document).on('click', '#submit-form-pegawai', function () {
     let username = $('#username').val();
     let nama_lengkap = $('#nama-pegawai').val();
     let email = $('#email').val()
-    let cabang = $('#cabang').val()
     let divisi = $('#divisi').val()
 
     $.ajax({
@@ -42,7 +41,6 @@ $(document).on('click', '#submit-form-pegawai', function () {
             username: username,
             nama_lengkap: nama_lengkap,
             email: email,
-            cabang: cabang,
             divisi: divisi,
         },
         success: function (response) {
@@ -88,7 +86,7 @@ function getPegawai()
         },
         'sAjaxDataProp': '',
         'columnDefs': [{
-                targets: [0, 1, 2, 3, 4],
+                targets: [0, 1, 2, 3],
                 visible: true
             },
             {
@@ -105,14 +103,6 @@ function getPegawai()
             },
             {
                 'targets': 1,
-                'data': 'nama_cabang',
-                'title': 'Kantor Cabang',
-                'render': function(data, type, row, meta) {
-                    return (data != null && data != 'null' && data != '') ? data : '-';
-                }
-            },
-            {
-                'targets': 2,
                 'data': 'nama_divisi',
                 'title': 'Divisi',
                 'render': function(data, type, row, meta) {
@@ -120,7 +110,7 @@ function getPegawai()
                 }
             },
             {
-                'targets': 3,
+                'targets': 2,
                 'data': 'status',
                 'title': 'Status',
                 'render': function(data, type, row, meta) {
@@ -128,7 +118,7 @@ function getPegawai()
                 }
             },
             {
-                'targets': 4,
+                'targets': 3,
                 'data': 'action',
                 'title': 'Action',
                 'render': function(data, type, row, meta) {
