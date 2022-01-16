@@ -40,10 +40,7 @@ class Barang extends CI_Controller {
     {
         $this->load->model('Barang_model');
 
-        $filter = array(
-            'cabang' => $this->input->post('cabang'));
-
-        $raw_result = $this->Barang_model->get_barang($filter);
+        $raw_result = $this->Barang_model->get_barang();
         $return_result = array();
 
         foreach($raw_result as $rr){

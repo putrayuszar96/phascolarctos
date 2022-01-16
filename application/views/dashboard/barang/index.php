@@ -9,15 +9,18 @@
             <div class="col-xl-12">
                 <div class="card mb-4">
                     <div class="card-header">
-                        Berkas
+                        Filter
                     </div>
                     <div class="card-body">
+                        <input type="hidden" id="divisi-user" value="<?= $_SESSION['divisi'] ;?>" />
                         <div class="row">
-                            <div class="col-12">
-                                <label for="kantor-cabang">Pilih Kantor Cabang:</label>
-                                <select class="form-control" id="show-kantor-cabang">
-                                    <option value="">--- Pilih kantor cabang yang ingin ditampilkan ---</option>
-                                </select>
+                            <div class="col-6">
+                                <label for="kantor-cabang">Divisi</label>
+                                <select class="form-control" id="filter-divisi"></select>
+                            </div>
+                            <div class="col-6">
+                                <label for="kantor-cabang">Lokasi Rak</label>
+                                <select class="form-control" id="filter-lokasi"></select>
                             </div>
                         </div>
                     </div>

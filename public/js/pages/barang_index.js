@@ -2,19 +2,8 @@ var cabang_terpilih = null;
 var label_cabang_terpilih = null;
 
 $(document).ready(function () {
-    getCabang();
+    getBarang()
 });
-
-$('#show-kantor-cabang').on('change', function() {
-    cabang_terpilih = $(this).val();
-    label_cabang_terpilih = $('option:selected', this).data('label')
-
-    let filter = {
-        cabang: cabang_terpilih
-    }
-
-    getBarang(filter);
-})
 
 $(document).on('click', '#btn-tambah-divisi', function () {
     $('main').loading();
@@ -152,8 +141,10 @@ function getCabang()
     })
 }
 
-function getBarang(filter)
+function getBarang()
 {
+    var divisi_user = $('#divisi-user').val();
+
     $('#dataTable').DataTable({
         "processing": true,
         "serverSide": false,
@@ -161,9 +152,6 @@ function getBarang(filter)
         'ajax': {
             'type': 'POST',
             'url': 'barang/list',
-            'data': function(d){
-                d.cabang = filter.cabang
-            },
             'dataSrc': function(json) {
                 if (json != null) {
                     if (json.status == 'ok') {
@@ -252,6 +240,9 @@ function getBarang(filter)
                     }
                     output += `<button type="button" id="delete_barang" data-id="${data.uuid}" class="btn btn-sm d-block btn-link text-danger"><i class="fa fa-trash"></i> Hapus Barang</button>`;
 
+                    if(divisi_user != 'ADM'){
+                        output = '<small><i>No action allowed</i></small>'
+                    }
                     return output;
                 }
             }

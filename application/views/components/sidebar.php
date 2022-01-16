@@ -14,7 +14,7 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-users-cog"></i></div>
                     Rak Milik
                 </a>
-                <a class="nav-link<?= ($active == 'berkas') ? " active" : "" ;?>" href="<?=base_url();?>berkas">
+                <a class="nav-link<?= ($active == 'berkas') ? " active" : "" ;?>" href="<?=base_url();?>barang">
                     <div class="sb-nav-link-icon"><i class="fas fa-copy"></i></div>
                     Berkas
                 </a>
