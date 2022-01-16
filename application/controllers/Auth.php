@@ -32,7 +32,7 @@ class Auth extends CI_Controller {
                 'login' => true,
                 'id' => $cek_login['data']['id'],
                 'username' => $cek_login['data']['username'],
-                'divisi' => $cek_login['data']['divisi'],
+                'divisi' => $cek_login['data']['id_divisi'],
                 'nama_lengkap' => $cek_login['data']['nama_lengkap'],
             ];
 

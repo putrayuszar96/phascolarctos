@@ -11,7 +11,7 @@ class Divisi_model extends CI_Model
     {
         $this->db->select('divisi.*, count(users.id) as jumlah_pegawai');
         $this->db->from('divisi');
-        $this->db->join('users', 'users.divisi = divisi.id_divisi', 'left');
+        $this->db->join('users', 'users.id_divisi = divisi.id_divisi', 'left');
         $this->db->group_by('divisi.id_divisi');
 
         return $this->db->get()->result_array();

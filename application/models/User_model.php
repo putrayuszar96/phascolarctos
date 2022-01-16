@@ -33,7 +33,7 @@ class User_model extends CI_Model
     {
         $this->db->select('users.id, users.username, users.nama_lengkap, divisi.nama AS nama_divisi, users.status');
         $this->db->from('users');
-        $this->db->join('divisi', 'users.divisi = divisi.id_divisi');
+        $this->db->join('divisi', 'users.id_divisi = divisi.id_divisi');
 
         return $this->db->get()->result_array();
     }

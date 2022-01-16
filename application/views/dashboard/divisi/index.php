@@ -16,7 +16,7 @@
                                 Data Divisi
                             </div>
                             <div class="col-6">
-                                <button id="btn-tambah-divisi" class="btn btn-primary btn-sm float-right">Tambah Divisi</button>
+                                <a href="<?=base_url();?>/divisi/add"><button id="btn-tambah-divisi" class="btn btn-primary btn-sm float-right">Tambah Divisi</button></a>
                             </div>
                         </div>
                     </div>

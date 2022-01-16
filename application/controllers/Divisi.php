@@ -63,29 +63,16 @@ class Divisi extends CI_Controller {
         }
     }
 
-    public function add_divisi_form()
+    public function add()
     {
-        $this->load->model('Divisi_model');
-
-        $data = array(
-            'value' => $this->input->post('value'),
-            'label' => $this->input->post('label'),
-        );
-
-        $get_id = $this->Divisi_model->ambil_id_terakhir($this->input->post('value'));
-
-        if($get_id != null){
-            $id_terakhir = $get_id['id_divisi'];
-            $id_terakhir = substr($id_terakhir, -1);
-        }else{
-            $id_terakhir = 0;
-        }
-        
-        $data['id_terakhir'] = $id_terakhir;
-
-        $pages = $this->load->view('dashboard/divisi/add', $data, true);
-
-        echo json_encode(['body' => $pages]);
+        $this->data['meta'] = [
+            'title' => 'Divisi - ARIP System',
+            'id_page' => 'divisi_add',
+            'name' => 'Tambah Divisi'
+        ];
+        $this->data['sidebar'] = $this->load->view('components/sidebar', array('active' => 'gudang'), true);
+        $this->data['body'] = $this->load->view('dashboard/gudang/add', $this->data, true);
+        $this->load->view('dashboard/index', $this->data);
     }
 
     public function add_divisi_process()

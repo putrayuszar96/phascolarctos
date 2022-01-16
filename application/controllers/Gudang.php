@@ -40,7 +40,7 @@ class Gudang extends CI_Controller {
     {
         $this->load->model('Rak_model');
 
-        $raw_result = $this->Rak_model->get_rak();
+        $raw_result = $this->Rak_model->get_rak_raw();
         $return_result = array();
 
         foreach($raw_result as $rr){
@@ -93,7 +93,7 @@ class Gudang extends CI_Controller {
 
         for($i=1;$i<=$jumlah_level;$i++){
             for($j=1;$j<=$jumlah_sublevel;$j++){
-                $list .= sprintf("%03d", $i).".".sprintf("%03d", $j);
+                $list .= $kode_gudang .= sprintf("%03d", $i).".".sprintf("%03d", $j);
 
                 if($i == $jumlah_level && $j == $jumlah_sublevel){
                     $list .= "";
